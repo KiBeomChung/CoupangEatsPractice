@@ -160,6 +160,11 @@ public class UserController {
         return new BaseResponse<>(getReceiptRes);
     }
 
+    /**
+     *
+     * 회원의 주문 내역 목록
+     * @return
+     */
     @GetMapping("{userId}/orderList")
     @ResponseBody
     public BaseResponse<List<GetOrderListRes>> getOrderListRes(@PathVariable("userId") String userId){
