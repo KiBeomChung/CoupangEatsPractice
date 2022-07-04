@@ -1,75 +1,95 @@
-com/example/demo/src/user/model/GetFavoriteRestaurantRes.java
- com.example.demo.src.user.model.GetFavoriteRestaurantRes
+com/example/demo/src/restaurant/RestaurantService.java
+ com.example.demo.src.restaurant.RestaurantService
 com/example/demo/src/user/model/PostUserReq.java
  com.example.demo.src.user.model.PostUserReq
 com/example/demo/config/Constant.java
  com.example.demo.config.Constant
-com/example/demo/src/user/model/GetRestaurantMenuRes.java
- com.example.demo.src.user.model.GetRestaurantMenuRes
-com/example/demo/src/user/model/PatchUserReviewReq.java
- com.example.demo.src.user.model.PatchUserReviewReq
+com/example/demo/src/restaurant/model/GetRestaurantListRes.java
+ com.example.demo.src.restaurant.model.GetRestaurantListRes
 com/example/demo/utils/ValidationRegex.java
  com.example.demo.utils.ValidationRegex
-com/example/demo/src/user/model/GetEatsOnlyMainRes.java
- com.example.demo.src.user.model.GetEatsOnlyMainRes
-com/example/demo/src/user/model/GetRestaurantReviewRes.java
- com.example.demo.src.user.model.GetRestaurantReviewRes
 com/example/demo/src/user/model/PostLoginRes.java
  com.example.demo.src.user.model.PostLoginRes
-com/example/demo/src/user/model/GetRestaurantDetailInfoReq.java
- com.example.demo.src.user.model.GetRestaurantDetailInfoReq
-com/example/demo/src/user/model/GetEventRes.java
- com.example.demo.src.user.model.GetEventRes
+com/example/demo/src/review/model/PatchUserReviewReq.java
+ com.example.demo.src.review.model.PatchUserReviewReq
+com/example/demo/src/review/model/PatchUserReviewDeleteReq.java
+ com.example.demo.src.review.model.PatchUserReviewDeleteReq
+com/example/demo/src/review/model/GetUserReviewRes.java
+ com.example.demo.src.review.model.GetUserReviewRes
 com/example/demo/utils/AES128.java
  com.example.demo.utils.AES128
+com/example/demo/src/restaurant/model/GetFavoriteRestaurantRes.java
+ com.example.demo.src.restaurant.model.GetFavoriteRestaurantRes
 com/example/demo/config/BaseResponseStatus.java
  com.example.demo.config.BaseResponseStatus
 com/example/demo/src/user/model/PatchUserReq.java
  com.example.demo.src.user.model.PatchUserReq
+com/example/demo/src/restaurant/RestaurantProvider.java
+ com.example.demo.src.restaurant.RestaurantProvider
 com/example/demo/src/WebSecurityConfig.java
  com.example.demo.src.WebSecurityConfig
-com/example/demo/src/user/model/PostUserReviewReq.java
- com.example.demo.src.user.model.PostUserReviewReq
+com/example/demo/src/review/model/PostUserReviewRes.java
+ com.example.demo.src.review.model.PostUserReviewRes
+com/example/demo/src/review/ReviewController.java
+ com.example.demo.src.review.ReviewController
+com/example/demo/src/user/model/PostUserAddressRes.java
+ com.example.demo.src.user.model.PostUserAddressRes
 com/example/demo/src/test/TestController.java
  com.example.demo.src.test.TestController
+com/example/demo/src/restaurant/model/GetEventRes.java
+ com.example.demo.src.restaurant.model.GetEventRes
 com/example/demo/src/user/model/PostLoginReq.java
  com.example.demo.src.user.model.PostLoginReq
+com/example/demo/src/review/ReviewDAO.java
+ com.example.demo.src.review.ReviewDAO
 com/example/demo/src/user/model/GetOrderListRes.java
  com.example.demo.src.user.model.GetOrderListRes
+com/example/demo/src/review/model/PostUserReviewReq.java
+ com.example.demo.src.review.model.PostUserReviewReq
 com/example/demo/config/secret/Secret.java
  com.example.demo.config.secret.Secret
 com/example/demo/src/user/model/GetReceiptRes.java
  com.example.demo.src.user.model.GetReceiptRes
-com/example/demo/src/user/model/GetUserReviewRes.java
- com.example.demo.src.user.model.GetUserReviewRes
+com/example/demo/src/user/model/GetUserAddressRes.java
+ com.example.demo.src.user.model.GetUserAddressRes
+com/example/demo/src/review/ReviewProvider.java
+ com.example.demo.src.review.ReviewProvider
 com/example/demo/src/user/model/PostUserRes.java
  com.example.demo.src.user.model.PostUserRes
 com/example/demo/utils/JwtService.java
  com.example.demo.utils.JwtService
 com/example/demo/config/BaseResponse.java
  com.example.demo.config.BaseResponse
+com/example/demo/src/restaurant/model/GetRestaurantReviewRes.java
+ com.example.demo.src.restaurant.model.GetRestaurantReviewRes
+com/example/demo/src/restaurant/RestaurantDAO.java
+ com.example.demo.src.restaurant.RestaurantDAO
+com/example/demo/src/user/model/PostUserAddressReq.java
+ com.example.demo.src.user.model.PostUserAddressReq
 com/example/demo/src/user/model/User.java
  com.example.demo.src.user.model.User
-com/example/demo/src/user/model/PostUserReviewRes.java
- com.example.demo.src.user.model.PostUserReviewRes
-com/example/demo/src/user/model/GetRestaurantListRes.java
- com.example.demo.src.user.model.GetRestaurantListRes
+com/example/demo/src/review/ReviewService.java
+ com.example.demo.src.review.ReviewService
+com/example/demo/src/restaurant/model/GetRestaurantMenuRes.java
+ com.example.demo.src.restaurant.model.GetRestaurantMenuRes
 com/example/demo/src/user/model/GetUserRes.java
  com.example.demo.src.user.model.GetUserRes
+com/example/demo/src/user/model/PatchUserAddressNicknameReq.java
+ com.example.demo.src.user.model.PatchUserAddressNicknameReq
 com/example/demo/config/BaseException.java
  com.example.demo.config.BaseException
 com/example/demo/DemoApplication.java
  com.example.demo.DemoApplication
-com/example/demo/src/user/model/PatchUserReviewDeleteReq.java
- com.example.demo.src.user.model.PatchUserReviewDeleteReq
-com/example/demo/src/user/model/GetFamousFranchiseRes.java
- com.example.demo.src.user.model.GetFamousFranchiseRes
+com/example/demo/src/restaurant/model/GetFamousFranchiseRes.java
+ com.example.demo.src.restaurant.model.GetFamousFranchiseRes
+com/example/demo/src/restaurant/model/GetEatsOnlyMainRes.java
+ com.example.demo.src.restaurant.model.GetEatsOnlyMainRes
 com/example/demo/src/user/UserDao.java
  com.example.demo.src.user.UserDao
 com/example/demo/src/user/UserService.java
  com.example.demo.src.user.UserService
-com/example/demo/src/user/model/GetUserAddressRes.java
- com.example.demo.src.user.model.GetUserAddressRes
+com/example/demo/src/restaurant/RestaurantController.java
+ com.example.demo.src.restaurant.RestaurantController
 com/example/demo/src/user/UserController.java
  com.example.demo.src.user.UserController
 com/example/demo/src/user/UserProvider.java

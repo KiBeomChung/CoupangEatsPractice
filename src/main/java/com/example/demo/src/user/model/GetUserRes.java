@@ -11,11 +11,11 @@ import java.sql.Timestamp;
 @Setter
 @AllArgsConstructor
 public class GetUserRes {
-    private String user_Id;
+    private String userId;
     private String name;
     private String password;
     private String phone_Num;
-    private boolean status;
+    private String status;
     private Timestamp createdAt;
     private Timestamp updatedAt;
     private String address;

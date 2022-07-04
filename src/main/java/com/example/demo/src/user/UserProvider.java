@@ -3,6 +3,8 @@ package com.example.demo.src.user;
 
 import com.example.demo.config.BaseException;
 import com.example.demo.config.secret.Secret;
+import com.example.demo.src.restaurant.model.*;
+import com.example.demo.src.review.model.GetUserReviewRes;
 import com.example.demo.src.user.model.*;
 import com.example.demo.utils.AES128;
 import com.example.demo.utils.JwtService;
@@ -89,42 +91,6 @@ public class UserProvider {
 
     }
 
-    public List<GetEatsOnlyMainRes> getEatsOnlyMain() throws BaseException{
-        List<GetEatsOnlyMainRes> getEatsOnlyMainRes = userDao.getEatsOnlyMain();
-        return getEatsOnlyMainRes;
-    }
-
-    public List<GetEventRes> getEventRes() throws BaseException{
-        List<GetEventRes> getEventRes = userDao.getEventList();
-        return getEventRes;
-    }
-
-    public List<GetRestaurantMenuRes> getRestaurantMenu(long restaurant_Id){
-        List<GetRestaurantMenuRes> getRestaurantMenuRes = userDao.getRestaurantMenuById(restaurant_Id);
-        return getRestaurantMenuRes;
-    }
-
-    public List<GetFavoriteRestaurantRes> getFavoriteRestaurant(String user_Id){
-        List<GetFavoriteRestaurantRes> getFavoriteRestaurantRes = userDao.getFavoriteRestaurant(user_Id);
-        return getFavoriteRestaurantRes;
-    }
-
-    public List<GetRestaurantListRes> getRestaurantList(String category_Name, int low_Price, int high_Price){
-        List<GetRestaurantListRes> getRestaurantList = userDao.getRestaurantList(category_Name, low_Price, high_Price);
-        return getRestaurantList;
-    }
-
-//    public List<GetRestaurantListRes> getRestaurantList(String category_Name){
-//        List<GetRestaurantListRes> getRestaurantList = userDao.getRestaurantList(category_Name);
-//        return getRestaurantList;
-//    }
-
-    public List<GetRestaurantReviewRes> getRestaurantReviewList(long restaurantId){
-        List<GetRestaurantReviewRes> getRestaurantReview = userDao.getRestaurantReview(restaurantId);
-        return getRestaurantReview;
-
-    }
-
     public GetReceiptRes getReceiptRes(String userId, long orderId){
         GetReceiptRes getReceipt = userDao.getReceipt(userId, orderId);
         return getReceipt;
@@ -132,16 +98,6 @@ public class UserProvider {
     public List<GetOrderListRes> getOrderListRes(String userId){
         List<GetOrderListRes> getOrderList = userDao.getOrderList(userId);
         return getOrderList;
-    }
-
-    public GetUserReviewRes getUserReviewRes(String userId, long orderId){
-        GetUserReviewRes getUserReview = userDao.getUserReview(userId, orderId);
-        return getUserReview;
-    }
-
-    public List<GetFamousFranchiseRes> getFamousFranchiseResList(){
-        List<GetFamousFranchiseRes> getFamousFranchiseResList = userDao.getFamousFranchiseList();
-        return getFamousFranchiseResList;
     }
 
     public List<GetUserAddressRes> getUserAddressList(String userId){

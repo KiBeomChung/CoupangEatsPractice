@@ -9,7 +9,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.Timestamp;
 import java.util.List;
 
 import static com.example.demo.config.BaseResponseStatus.POST_USERS_EMPTY_NAME;
@@ -149,91 +148,6 @@ public class UserController {
         }
     }
 
-//    @ResponseBody
-//    @GetMapping("/restaurant/{restaurantId}/detailInfo")
-//    public BaseResponse<GetRestaurantDetailInfoReq> getRestaurantDetailInfo() throws BaseException{
-//
-//    }
-
-    /**
-     * 이츠에만 있는 가게
-     */
-    @ResponseBody
-    @GetMapping("/EatsOnlyMain")
-    public BaseResponse<List<GetEatsOnlyMainRes>> getEatsOnlyMain() throws BaseException{
-        List<GetEatsOnlyMainRes> getEatsOnlyMainRes = userProvider.getEatsOnlyMain();
-        return new BaseResponse<>(getEatsOnlyMainRes);
-    }
-
-    /**
-     * 진행중인 이벤트 목록
-     */
-    @GetMapping("/eventList")
-    @ResponseBody
-    public BaseResponse<List<GetEventRes>> getEventList() throws BaseException{
-        List<GetEventRes> getEventRes = userProvider.getEventRes();
-        return new BaseResponse<>(getEventRes);
-    }
-
-    /**
-     * 가게의 메뉴들
-     */
-    @GetMapping("restaurant/{restaurant_Id}")
-    @ResponseBody
-    public BaseResponse<List<GetRestaurantMenuRes>> getRestaurantMenuBase(@PathVariable("restaurant_Id") long restaurant_Id)  throws BaseException{
-        List<GetRestaurantMenuRes> getRestaurantMenuRes = userProvider.getRestaurantMenu(restaurant_Id);
-        return new BaseResponse<>(getRestaurantMenuRes);
-    }
-
-    /**
-     * 회원의 즐겨찾기 가게
-     */
-    @GetMapping("/{user_Id}/favoriteRestaurant")
-    @ResponseBody
-    public BaseResponse<List<GetFavoriteRestaurantRes>> getFavoriteRestaurantList(@PathVariable("user_Id") String user_Id) throws BaseException{
-        List<GetFavoriteRestaurantRes> getFavoriteRestaurantResList = userProvider.getFavoriteRestaurant(user_Id);
-        return new BaseResponse<>(getFavoriteRestaurantResList);
-    }
-
-    /**
-     * 음식 카테고리에 따른 가게 리스트
-     */
-//    @GetMapping("/{category_Name}/{lowPrice}/{highPrice}")
-//    @ResponseBody
-//    public BaseResponse<List<GetRestaurantListRes>> getRestaurantList(@RequestParam("category_Name") String category_Name,
-//                                                                      @RequestParam("low_Price") int low_Price,
-//                                                                      @RequestParam("high_Price") int high_Price){
-//        List<GetRestaurantListRes> getRestaurantListRes = userProvider.getRestaurantList(category_Name, low_Price, high_Price);
-//        return new BaseResponse<>(getRestaurantListRes);
-//    }
-
-//    @GetMapping("/category/{category_Name}")
-//    @ResponseBody
-//    public BaseResponse<List<GetRestaurantListRes>> getRestaurantList(@RequestParam(value = "category_Name", required = false) String category_Name){
-//        List<GetRestaurantListRes> getRestaurantListRes = userProvider.getRestaurantList(category_Name);
-//        return new BaseResponse<>(getRestaurantListRes);
-//    }
-
-    @GetMapping("/category")
-    @ResponseBody
-    public BaseResponse<List<GetRestaurantListRes>> getRestaurantList(@RequestParam(value = "category_Name") String category_Name,
-                                                                      @RequestParam(value = "lowPrice") int lowPrice,
-                                                                      @RequestParam(value = "highPrice") int highPrice){
-        System.out.println(category_Name);
-        List<GetRestaurantListRes> getRestaurantListRes = userProvider.getRestaurantList(category_Name, lowPrice, highPrice);
-        return new BaseResponse<>(getRestaurantListRes);
-    }
-
-    /**
-     * 식당의 리뷰 목록
-     */
-    @GetMapping("/{restaurantId}/reviewList")
-    @ResponseBody
-    public BaseResponse<List<GetRestaurantReviewRes>> getRestaurantReviewRes(@PathVariable("restaurantId") long restaurantId){
-        List<GetRestaurantReviewRes> getRestaurantReviewResList = userProvider.getRestaurantReviewList(restaurantId);
-        return new BaseResponse<>(getRestaurantReviewResList);
-    }
-
     @GetMapping("{userId}/order/{orderId}")
     @ResponseBody
     public BaseResponse<GetReceiptRes> getReceiptResBaseResponse(@PathVariable("userId") String userId,
@@ -249,65 +163,31 @@ public class UserController {
         return new BaseResponse<>(getOrderListRes);
     }
 
-    @PostMapping("/review/{userId}/{orderId}")
-    @ResponseBody
-    public BaseResponse<PostUserReviewRes> writeReview(@RequestBody PostUserReviewReq postUserReviewReq,
-                                                       @PathVariable("userId") String userId,
-                                                       @PathVariable("orderId") long orderId){
-
-        PostUserReviewRes postUserReviewRes = userService.writeReview(postUserReviewReq, userId, orderId);
-        return new BaseResponse<>(postUserReviewRes);
-    }
-
-    @GetMapping("/review/{userId}/{orderId}")
-    @ResponseBody
-    public BaseResponse<GetUserReviewRes> getUserReviewResBaseResponse(@PathVariable("userId") String userId,
-                                                                       @PathVariable("orderId") long orderId){
-        GetUserReviewRes getUserReviewRes = userProvider.getUserReviewRes(userId, orderId);
-            return new BaseResponse<>(getUserReviewRes);
-    }
-
-    @PatchMapping("/review/{userId}/{orderId}")
-    @ResponseBody
-    public BaseResponse<String> modifyUserReview(@PathVariable("userId") String userId,
-                                                 @PathVariable("orderId") long orderId,
-                                                 @RequestBody PatchUserReviewReq patchUserReviewReq){
-        Timestamp dateNow = new Timestamp(System.currentTimeMillis()); //수정시간 받아오기
-        patchUserReviewReq.setOrderedAt(dateNow);
-        PatchUserReviewReq patchUserReviewReq1 = new PatchUserReviewReq(userId, orderId, patchUserReviewReq.getReviewText(), patchUserReviewReq.getOrderedAt());
-
-        userService.modifyUserReview(patchUserReviewReq1);
-
-        String result = "";
-        return new BaseResponse<>(result);
-    }
-
-    @PatchMapping("review/delete/{userId}/{reviewId}")
-    @ResponseBody
-    public BaseResponse<String> deleteUserReview(@PathVariable("userId") String userId,
-                                                 @PathVariable("reviewId") long reviewId,
-                                                 @RequestBody PatchUserReviewDeleteReq patchUserReviewDeleteReq){
-
-        PatchUserReviewDeleteReq patchUserReviewDeleteReq1 = new PatchUserReviewDeleteReq(userId, reviewId, patchUserReviewDeleteReq.getStatus());
-        userService.deleteUserReview(patchUserReviewDeleteReq1);
-
-        String result = "상태변경 완료하였습니다.";
-        return new BaseResponse<>(result);
-
-    }
-
-    @GetMapping("/restaurant/franchise")
-    @ResponseBody
-    public BaseResponse<List<GetFamousFranchiseRes>> getFamousFranchiseRes(){
-        List<GetFamousFranchiseRes> getFamousFranchiseResList = userProvider.getFamousFranchiseResList();
-        return new BaseResponse<>(getFamousFranchiseResList);
-    }
 
     @GetMapping("/{userId}/myAddressList")
     @ResponseBody
     public BaseResponse<List<GetUserAddressRes>> getUserAddressRes(@PathVariable("userId") String userId){
         List<GetUserAddressRes> getUserAddressResList = userProvider.getUserAddressList(userId);
         return new BaseResponse<>(getUserAddressResList);
+    }
+
+    @PostMapping("/{userId}/myAddressList/add")
+    @ResponseBody
+    public BaseResponse<PostUserAddressRes> addUserAddress(@PathVariable("userId") String userId,
+                                               @RequestBody PostUserAddressReq postUserAddressReq){
+        PostUserAddressRes postUserAddressRes = userService.addUserAddress(postUserAddressReq, userId);
+        return new BaseResponse<>(postUserAddressRes);
+    }
+
+    @PatchMapping("/{userId}/myAddressList/add/{addressId}")
+    @ResponseBody
+    public BaseResponse<String> modifyAddressNickname(@PathVariable("userId") String userId,
+                                                      @PathVariable("addressId") long addressId,
+                                                      @RequestBody PatchUserAddressNicknameReq patchUserAddressNicknameReq){
+        PatchUserAddressNicknameReq patchUserAddressNicknameReq1 = new PatchUserAddressNicknameReq(userId, addressId, patchUserAddressNicknameReq.getAddressName());
+        userService.modifyAddressNickname(patchUserAddressNicknameReq1);
+        String result = "변경 완료하였습니다.";
+        return new BaseResponse<>(result);
     }
 }
 
