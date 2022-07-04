@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import static com.example.demo.config.BaseResponseStatus.POST_USERS_EMPTY_NAME;
@@ -125,8 +126,8 @@ public class UserController {
      * @return BaseResponse<String>
      */
     @ResponseBody
-    @PatchMapping("/{user_Id}")
-    public BaseResponse<String> modifyUserName(@PathVariable("user_Id") String user_Id, @RequestBody PatchUserReq patchUserReq){
+    @PatchMapping("/{userId}")
+    public BaseResponse<String> modifyUserAddress(@PathVariable("userId") String userId, @RequestBody PatchUserReq patchUserReq){
         try {
             //jwt에서 idx 추출.
             //int userIdxByJwt = jwtService.getUserIdx();
@@ -134,11 +135,12 @@ public class UserController {
 //            if(userIdx != userIdxByJwt){
 //                return new BaseResponse<>(INVALID_USER_JWT);
 //            }
-            //같다면 유저네임 변경
-            PatchUserReq patchUserReq1 = new PatchUserReq(user_Id,patchUserReq.getName());
+
+            //주소 변경
+            PatchUserReq patchUserReq1 = new PatchUserReq(userId, patchUserReq.getAddress());
 
 
-            userService.modifyUserName(patchUserReq1);
+            userService.modifyUserAddress(patchUserReq1);
 
             String result = "";
         return new BaseResponse<>(result);
@@ -267,31 +269,37 @@ public class UserController {
 
     @PatchMapping("/review/{userId}/{orderId}")
     @ResponseBody
-    public BaseResponse
+    public BaseResponse<String> modifyUserReview(@PathVariable("userId") String userId,
+                                                 @PathVariable("orderId") long orderId,
+                                                 @RequestBody PatchUserReviewReq patchUserReviewReq){
+        Timestamp dateNow = new Timestamp(System.currentTimeMillis()); //수정시간 받아오기
+        patchUserReviewReq.setOrderedAt(dateNow);
+        PatchUserReviewReq patchUserReviewReq1 = new PatchUserReviewReq(userId, orderId, patchUserReviewReq.getReviewText(), patchUserReviewReq.getOrderedAt());
+
+        userService.modifyUserReview(patchUserReviewReq1);
+
+        String result = "";
+        return new BaseResponse<>(result);
+    }
+
+    @PatchMapping("review/delete/{userId}/{reviewId}")
+    @ResponseBody
+    public BaseResponse<String> deleteUserReview(@PathVariable("userId") String userId,
+                                                 @PathVariable("reviewId") long reviewId,
+                                                 @RequestBody PatchUserReviewDeleteReq patchUserReviewDeleteReq){
+
+        PatchUserReviewDeleteReq patchUserReviewDeleteReq1 = new PatchUserReviewDeleteReq(userId, reviewId, patchUserReviewDeleteReq.getStatus());
+        userService.deleteUserReview(patchUserReviewDeleteReq1);
+
+        String result = "상태변경 완료하였습니다.";
+        return new BaseResponse<>(result);
+
+    }
+//
+//    @GetMapping()
+//    @ResponseBody
+//    public BaseResponse<List<>>
 
 
 }
-
-//    @ResponseBody
-//    @PatchMapping("/{user_Id}")
-//    public BaseResponse<String> modifyUserName(@PathVariable("user_Id") String user_Id, @RequestBody PatchUserReq patchUserReq){
-//        try {
-//            //jwt에서 idx 추출.
-//            //int userIdxByJwt = jwtService.getUserIdx();
-//            //userIdx와 접근한 유저가 같은지 확인
-////            if(userIdx != userIdxByJwt){
-////                return new BaseResponse<>(INVALID_USER_JWT);
-////            }
-//            //같다면 유저네임 변경
-//            PatchUserReq patchUserReq1 = new PatchUserReq(user_Id,patchUserReq.getName());
-//
-//
-//            userService.modifyUserName(patchUserReq1);
-//
-//            String result = "";
-//            return new BaseResponse<>(result);
-//        } catch (BaseException exception) {
-//            return new BaseResponse<>((exception.getStatus()));
-//        }
-//    }
 

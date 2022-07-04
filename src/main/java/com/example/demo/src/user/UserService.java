@@ -61,9 +61,9 @@ public class UserService {
         }
     }
 
-    public void modifyUserName(PatchUserReq patchUserReq) throws BaseException {
+    public void modifyUserAddress(PatchUserReq patchUserReq) throws BaseException {
        // try{
-            int result = userDao.modifyUserName(patchUserReq);
+            int result = userDao.modifyUserAddress(patchUserReq);
             if(result == 0){
                 throw new BaseException(MODIFY_FAIL_USERNAME);
             }
@@ -75,6 +75,14 @@ public class UserService {
     public PostUserReviewRes writeReview(PostUserReviewReq postUserReviewReq, String userId, long orderId){
         String user_Id = userDao.writeReview(postUserReviewReq, userId, orderId);
         return new PostUserReviewRes(user_Id);
+    }
+
+    public void modifyUserReview(PatchUserReviewReq patchUserReviewReq){
+        int result = userDao.modifyUserReview(patchUserReviewReq);
+    }
+
+    public void deleteUserReview(PatchUserReviewDeleteReq patchUserReviewDeleteReq){
+        int result = userDao.deleteUserReview(patchUserReviewDeleteReq);
     }
 
 

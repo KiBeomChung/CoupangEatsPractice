@@ -8,6 +8,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class PatchUserReq {
-    private String user_Id;
-    private String name;
+
+    private String userId;
+    private String address;
 }

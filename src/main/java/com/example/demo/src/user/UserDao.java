@@ -97,15 +97,12 @@ public class UserDao {
 
     }
 
-    public int modifyUserName(PatchUserReq patchUserReq) {
+    public int modifyUserAddress(PatchUserReq patchUserReq) {
 
-        System.out.println(patchUserReq.getName());
-        System.out.println(patchUserReq.getUser_Id());
+        String modifyUserAddressQuery = "update User set address = ? where userId = ? ";
+        Object[] modifyUserAddressParams = new Object[]{patchUserReq.getAddress(), patchUserReq.getUserId()};
 
-        String modifyUserNameQuery = "update User set name = ? where user_Id = ? ";
-        Object[] modifyUserNameParams = new Object[]{patchUserReq.getName(), patchUserReq.getUser_Id()};
-
-        return this.jdbcTemplate.update(modifyUserNameQuery, modifyUserNameParams);
+        return this.jdbcTemplate.update(modifyUserAddressQuery, modifyUserAddressParams);
     }
 
     public User getPwd(PostLoginReq postLoginReq) {
@@ -372,5 +369,21 @@ public class UserDao {
                         rs.getString("foodName")
                 ),
                 getOrderId, getUserId);
+    }
+
+    public int modifyUserReview(PatchUserReviewReq patchUserReviewReq){
+
+        String modifyUserReviewQuery = "update Review set reviewText = ?, updatedAt = ? where orderId = ?";
+        Object[] modifyUserReviewParams = new Object[]{patchUserReviewReq.getReviewText(), patchUserReviewReq.getOrderedAt(), patchUserReviewReq.getOrderId()};
+
+        return this.jdbcTemplate.update(modifyUserReviewQuery, modifyUserReviewParams);
+    }
+
+    public int deleteUserReview(PatchUserReviewDeleteReq patchUserReviewDeleteReq){
+
+        String deleteUserReviewQuery = "update Review set status = ? where reviewId = ? AND UserId = ?";
+        Object[] deleteUserReviewParam = new Object[]{patchUserReviewDeleteReq.getStatus(), patchUserReviewDeleteReq.getReviewId(), patchUserReviewDeleteReq.getUserId()};
+
+        return this.jdbcTemplate.update(deleteUserReviewQuery, deleteUserReviewParam);
     }
 }

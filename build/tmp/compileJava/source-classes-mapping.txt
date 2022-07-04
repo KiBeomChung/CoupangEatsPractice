@@ -6,6 +6,8 @@ com/example/demo/config/Constant.java
  com.example.demo.config.Constant
 com/example/demo/src/user/model/GetRestaurantMenuRes.java
  com.example.demo.src.user.model.GetRestaurantMenuRes
+com/example/demo/src/user/model/PatchUserReviewReq.java
+ com.example.demo.src.user.model.PatchUserReviewReq
 com/example/demo/utils/ValidationRegex.java
  com.example.demo.utils.ValidationRegex
 com/example/demo/src/user/model/GetEatsOnlyMainRes.java
@@ -62,7 +64,9 @@ com/example/demo/src/user/UserDao.java
  com.example.demo.src.user.UserDao
 com/example/demo/src/user/UserService.java
  com.example.demo.src.user.UserService
-com/example/demo/src/user/UserController.java
- com.example.demo.src.user.UserController
+com/example/demo/src/user/model/PatchUserReviewDeleteReq.java
+ com.example.demo.src.user.model.PatchUserReviewDeleteReq
 com/example/demo/src/user/UserProvider.java
  com.example.demo.src.user.UserProvider
+com/example/demo/src/user/UserController.java
+ com.example.demo.src.user.UserController
