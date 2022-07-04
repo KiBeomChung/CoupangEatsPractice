@@ -386,4 +386,37 @@ public class UserDao {
 
         return this.jdbcTemplate.update(deleteUserReviewQuery, deleteUserReviewParam);
     }
+
+    public List<GetFamousFranchiseRes> getFamousFranchiseList(){
+        String getFamousFranchiseListQuery = "SELECT Image.file,\n" +
+                "       Restaurant.name,\n" +
+                "       Restaurant.fastDelivery,\n" +
+                "       Restaurant.reviewScore,\n" +
+                "       Restaurant.deliveryFee\n" +
+                "FROM Restaurant\n" +
+                "INNER JOIN Restaurant_Main_Img on Restaurant.restaurantId = Restaurant_Main_Img.restaurantId\n" +
+                "INNER JOIN Image on Restaurant_Main_Img.imgId = Image.imgId\n" +
+                "INNER JOIN Franchise ON Franchise.franchiseId = Restaurant.franchiseId";
+        return this.jdbcTemplate.query(getFamousFranchiseListQuery,
+                (rs, rowNum) -> new GetFamousFranchiseRes(
+                        rs.getString("file"),
+                        rs.getString("name"),
+                        rs.getString("fastDelivery"),
+                        rs.getInt("reviewScore"),
+                        rs.getInt("deliveryFee"))
+        );
+    }
+
+    public List<GetUserAddressRes> getUserAddressList(String userId){
+        String getUserAddressQuery = "SELECT address.addressName, address.realAddress, address.status\n" +
+                "FROM address WHERE userId = ?";
+        String getUserId = userId;
+        return this.jdbcTemplate.query(getUserAddressQuery,
+                (rs, rowNum) -> new GetUserAddressRes(
+                        rs.getString("addressName"),
+                        rs.getString("realAddress"),
+                        rs.getString("status")
+                ),
+                getUserId);
+    }
 }

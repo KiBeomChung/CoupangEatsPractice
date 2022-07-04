@@ -295,11 +295,19 @@ public class UserController {
         return new BaseResponse<>(result);
 
     }
-//
-//    @GetMapping()
-//    @ResponseBody
-//    public BaseResponse<List<>>
 
+    @GetMapping("/restaurant/franchise")
+    @ResponseBody
+    public BaseResponse<List<GetFamousFranchiseRes>> getFamousFranchiseRes(){
+        List<GetFamousFranchiseRes> getFamousFranchiseResList = userProvider.getFamousFranchiseResList();
+        return new BaseResponse<>(getFamousFranchiseResList);
+    }
 
+    @GetMapping("/{userId}/myAddressList")
+    @ResponseBody
+    public BaseResponse<List<GetUserAddressRes>> getUserAddressRes(@PathVariable("userId") String userId){
+        List<GetUserAddressRes> getUserAddressResList = userProvider.getUserAddressList(userId);
+        return new BaseResponse<>(getUserAddressResList);
+    }
 }
 

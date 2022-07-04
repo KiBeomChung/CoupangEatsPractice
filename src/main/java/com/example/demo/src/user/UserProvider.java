@@ -139,4 +139,14 @@ public class UserProvider {
         return getUserReview;
     }
 
+    public List<GetFamousFranchiseRes> getFamousFranchiseResList(){
+        List<GetFamousFranchiseRes> getFamousFranchiseResList = userDao.getFamousFranchiseList();
+        return getFamousFranchiseResList;
+    }
+
+    public List<GetUserAddressRes> getUserAddressList(String userId){
+        List<GetUserAddressRes> getUserAddressResList = userDao.getUserAddressList(userId);
+        return getUserAddressResList;
+    }
+
 }
