@@ -148,6 +148,10 @@ public class UserController {
         }
     }
 
+    /**
+     * 회원이 주문한 주문 내역 영수증
+     * @return
+     */
     @GetMapping("{userId}/order/{orderId}")
     @ResponseBody
     public BaseResponse<GetReceiptRes> getReceiptResBaseResponse(@PathVariable("userId") String userId,
