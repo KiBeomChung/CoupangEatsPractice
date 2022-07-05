@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static com.example.demo.config.BaseResponseStatus.POST_USERS_EMPTY_NAME;
+import static com.example.demo.config.BaseResponseStatus.*;
 
 @RestController
 @RequestMapping("/app/users")
@@ -90,6 +90,18 @@ public class UserController {
         if(postUserReq.getName() == null){ //이름이 안들어왔을때 리턴값
             return new BaseResponse<>(POST_USERS_EMPTY_NAME);
         }
+        if(postUserReq.getUserId() == null){ //userId가 안들어왔을때 리턴값
+            return new BaseResponse<>(USERS_EMPTY_USER_ID);
+        }
+        if(postUserReq.getPhone_Num() == null){ //휴대폰 번호가 안들어왔을떄 리턴값
+            return new BaseResponse<>(POST_USERS_EMPTY_PHONENUM);
+        }
+        if(postUserReq.getAddress() == null){ //주소가 안들어왔을때 리턴값
+            return new BaseResponse<>(POST_USERS_EMPTY_ADDRESS);
+        }
+        if(postUserReq.getPassword() == null){ //비밀번호를 입력안했을 경우 리턴값
+            return new BaseResponse<>(POST_USERS_EMPTY_PASSWORD);
+        }
         //이메일 정규표현
 //        if(!isRegexEmail(postUserReq.getEmail())){
 //            return new BaseResponse<>(POST_USERS_INVALID_EMAIL);
@@ -155,9 +167,21 @@ public class UserController {
     @GetMapping("{userId}/order/{orderId}")
     @ResponseBody
     public BaseResponse<GetReceiptRes> getReceiptResBaseResponse(@PathVariable("userId") String userId,
-                                                                 @PathVariable("orderId") long orderId){
-        GetReceiptRes getReceiptRes = userProvider.getReceiptRes(userId, orderId);
-        return new BaseResponse<>(getReceiptRes);
+                                                                 @PathVariable("orderId") long orderId) throws Exception{
+        if(userId == null){ //userId의 값이 없을떄
+            return new BaseResponse<>(USERS_EMPTY_USER_ID);
+        }
+
+        //orderId의 값이 없을때는 어떻게 해야할까? long 형식은 null 값이 없는데,,
+
+        try{
+            GetReceiptRes getReceiptRes = userProvider.getReceiptRes(userId, orderId);
+            return new BaseResponse<>(getReceiptRes);
+
+        } catch(BaseException exception) {
+            System.out.println("여기로 들어옴!!!!!!!");
+            return new BaseResponse<>(exception.getStatus());
+        }
     }
 
     /**
@@ -167,9 +191,19 @@ public class UserController {
      */
     @GetMapping("{userId}/orderList")
     @ResponseBody
-    public BaseResponse<List<GetOrderListRes>> getOrderListRes(@PathVariable("userId") String userId){
-        List<GetOrderListRes> getOrderListRes = userProvider.getOrderListRes(userId);
-        return new BaseResponse<>(getOrderListRes);
+    public BaseResponse<List<GetOrderListRes>> getOrderListRes(@PathVariable("userId") String userId) throws BaseException {
+
+        if(userId == null){ //userId의 값이 없을떄
+            return new BaseResponse<>(USERS_EMPTY_USER_ID);
+        }
+
+        try {
+            List<GetOrderListRes> getOrderListRes = userProvider.getOrderListRes(userId);
+            return new BaseResponse<>(getOrderListRes);
+
+        } catch(BaseException exception) {
+            return new BaseResponse<>(exception.getStatus());
+        }
     }
 
 

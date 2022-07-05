@@ -71,6 +71,14 @@ public class UserProvider {
         }
     }
 
+    public int checkUserId(String userId) throws BaseException{
+        try{
+            return userDao.checkUserId(userId);
+        } catch(Exception e) {
+            throw new BaseException(NOT_EXISTS_USERID);
+        }
+    }
+
     public PostLoginRes logIn(PostLoginReq postLoginReq) throws BaseException{
         User user = userDao.getPwd(postLoginReq);
         String password;
@@ -91,11 +99,26 @@ public class UserProvider {
 
     }
 
-    public GetReceiptRes getReceiptRes(String userId, long orderId){
+    public GetReceiptRes getReceiptRes(String userId, long orderId) throws Exception{
+
+        if(userDao.checkUserId(userId) == 0){ // db에 입력받은 userId가 존재하는지 확인
+            throw new BaseException(NOT_EXISTS_USERID);
+        }
+
+        if(userDao.checkOrderId(orderId) == 0){ //db에 입력받은 orderId가 존재하는지 확인
+            throw new BaseException(NOT_EXISTS_ORDERID);
+        }
+
         GetReceiptRes getReceipt = userDao.getReceipt(userId, orderId);
         return getReceipt;
     }
-    public List<GetOrderListRes> getOrderListRes(String userId){
+
+    public List<GetOrderListRes> getOrderListRes(String userId) throws BaseException {
+
+        if(userDao.checkUserId(userId) == 0){ // db에 입력받은 userId가 존재하는지 확인
+            throw new BaseException(NOT_EXISTS_USERID);
+        }
+
         List<GetOrderListRes> getOrderList = userDao.getOrderList(userId);
         return getOrderList;
     }

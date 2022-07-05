@@ -90,6 +90,18 @@ public class UserDao {
 
     }
 
+    public int checkUserId(String userId){
+        String checkUserIdQuery ="select exists(select userId from User where userId = ?)";
+        String checkUserParams = userId;
+        return this.jdbcTemplate.queryForObject(checkUserIdQuery, int.class, checkUserParams);
+    }
+
+    public int checkOrderId(long orderId){
+        String checkOrderIdQuery = "select exists(select orderId from Order_Food where orderId = ?)";
+        long checkOrderIdParam = orderId;
+        return this.jdbcTemplate.queryForObject(checkOrderIdQuery, int.class, checkOrderIdParam);
+    }
+
     public int modifyUserAddress(PatchUserReq patchUserReq) {
 
         String modifyUserAddressQuery = "update User set address = ? where userId = ? ";
