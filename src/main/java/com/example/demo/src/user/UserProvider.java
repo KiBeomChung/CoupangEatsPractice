@@ -104,7 +104,6 @@ public class UserProvider {
         if(userDao.checkUserId(userId) == 0){ // db에 입력받은 userId가 존재하는지 확인
             throw new BaseException(NOT_EXISTS_USERID);
         }
-
         if(userDao.checkOrderId(orderId) == 0){ //db에 입력받은 orderId가 존재하는지 확인
             throw new BaseException(NOT_EXISTS_ORDERID);
         }
@@ -123,7 +122,12 @@ public class UserProvider {
         return getOrderList;
     }
 
-    public List<GetUserAddressRes> getUserAddressList(String userId){
+    public List<GetUserAddressRes> getUserAddressList(String userId) throws BaseException {
+
+        if(userDao.checkUserId(userId) == 0){ // db에 입력받은 userId가 존재하는지 확인
+            throw new BaseException(NOT_EXISTS_USERID);
+        }
+
         List<GetUserAddressRes> getUserAddressResList = userDao.getUserAddressList(userId);
         return getUserAddressResList;
     }

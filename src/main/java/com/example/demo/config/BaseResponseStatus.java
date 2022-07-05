@@ -36,6 +36,7 @@ public enum BaseResponseStatus {
     POST_USERS_EMPTY_ADDRESS(false, 2021, "주소를 입력해주세요"),
     POST_USERS_EMPTY_PHONENUM(false, 2022, "휴대폰 번호를 입력해주세요"),
     POST_USERS_EMPTY_PASSWORD(false, 2023, "비밀번호를 설정하세요."),
+    POST_USERS_EMPTY_STATUS(false,2024,"상태를 등록하세요."),
 
 
 
@@ -47,6 +48,7 @@ public enum BaseResponseStatus {
 
     // [POST] /users
     DUPLICATED_EMAIL(false, 3013, "중복된 이메일입니다."),
+    DUPLICATED_ADDRESS(false,3014, "중복된 주소가 존재합니다."),
     FAILED_TO_LOGIN(false,3014,"없는 아이디거나 비밀번호가 틀렸습니다."),
 
 

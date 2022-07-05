@@ -71,7 +71,13 @@ public class UserService {
 //        }
     }
 
-    public PostUserAddressRes addUserAddress(PostUserAddressReq postUserAddressReq, String userId){
+    public PostUserAddressRes addUserAddress(PostUserAddressReq postUserAddressReq, String userId) throws BaseException {
+
+        // 중복된 주소가 있는지 확인하는 validation
+        if(userDao.isMultipleAddress(postUserAddressReq.getRealAddress(), userId) != 0){
+            throw new BaseException(DUPLICATED_ADDRESS);
+        }
+
         String user_Id = userDao.addUserAddress(postUserAddressReq, userId);
         return new PostUserAddressRes(userId);
     }

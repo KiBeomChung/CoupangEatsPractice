@@ -206,20 +206,55 @@ public class UserController {
         }
     }
 
-
+    /**
+     * 회원의 배송 주소 목록 조회
+     * @param userId
+     * @return BaseResponse<List<GetUserAddressRes>>
+     * @throws BaseException
+     */
     @GetMapping("/{userId}/myAddressList")
     @ResponseBody
-    public BaseResponse<List<GetUserAddressRes>> getUserAddressRes(@PathVariable("userId") String userId){
-        List<GetUserAddressRes> getUserAddressResList = userProvider.getUserAddressList(userId);
-        return new BaseResponse<>(getUserAddressResList);
+    public BaseResponse<List<GetUserAddressRes>> getUserAddressRes(@PathVariable("userId") String userId) throws BaseException {
+
+        if (userId == null) { //userId의 값이 없을떄
+            return new BaseResponse<>(USERS_EMPTY_USER_ID);
+        }
+
+        try {
+            List<GetUserAddressRes> getUserAddressResList = userProvider.getUserAddressList(userId);
+            return new BaseResponse<>(getUserAddressResList);
+        } catch (BaseException exception) {
+            return new BaseResponse<>(exception.getStatus());
+        }
     }
 
+    /**
+     * 회원의 주소 추가
+     * @param userId
+     * @param postUserAddressReq
+     * @return BaseResponse<PostUserAddressRes>
+     */
     @PostMapping("/{userId}/myAddressList/add")
     @ResponseBody
     public BaseResponse<PostUserAddressRes> addUserAddress(@PathVariable("userId") String userId,
-                                               @RequestBody PostUserAddressReq postUserAddressReq){
-        PostUserAddressRes postUserAddressRes = userService.addUserAddress(postUserAddressReq, userId);
-        return new BaseResponse<>(postUserAddressRes);
+                                               @RequestBody PostUserAddressReq postUserAddressReq) throws BaseException {
+
+        if (userId == null) { //userId의 값이 없을떄
+            return new BaseResponse<>(USERS_EMPTY_USER_ID);
+        }
+        if(postUserAddressReq.getRealAddress() == null || postUserAddressReq.getAddressName() == null){ //주소 입력이 안되었을때
+            return new BaseResponse<>(POST_USERS_EMPTY_ADDRESS);
+        }
+        if(postUserAddressReq.getStatus() == null){ //status가 등록안되었을 경우
+            return new BaseResponse<>(POST_USERS_EMPTY_STATUS);
+        }
+
+        try {
+            PostUserAddressRes postUserAddressRes = userService.addUserAddress(postUserAddressReq, userId);
+            return new BaseResponse<>(postUserAddressRes);
+        } catch (BaseException exception) {
+            return new BaseResponse<>(exception.getStatus());
+        }
     }
 
     @PatchMapping("/{userId}/myAddressList/add/{addressId}")

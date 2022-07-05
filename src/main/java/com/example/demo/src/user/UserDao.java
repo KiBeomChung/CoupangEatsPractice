@@ -92,14 +92,22 @@ public class UserDao {
 
     public int checkUserId(String userId){
         String checkUserIdQuery ="select exists(select userId from User where userId = ?)";
-        String checkUserParams = userId;
-        return this.jdbcTemplate.queryForObject(checkUserIdQuery, int.class, checkUserParams);
+        String checkUserParam = userId;
+        return this.jdbcTemplate.queryForObject(checkUserIdQuery, int.class, checkUserParam);
     }
 
     public int checkOrderId(long orderId){
         String checkOrderIdQuery = "select exists(select orderId from Order_Food where orderId = ?)";
         long checkOrderIdParam = orderId;
         return this.jdbcTemplate.queryForObject(checkOrderIdQuery, int.class, checkOrderIdParam);
+    }
+
+    // 중복된 주소가 있는지 확인하는 메소드
+    public int isMultipleAddress(String address, String userId){
+        String isMultipleAddressQuery = "select exists(select userId from address where realAddress = ? and userId = ?)";
+        String checkAddressParam = address;
+        String checkUserIdParam = userId;
+        return this.jdbcTemplate.queryForObject(isMultipleAddressQuery, int.class, checkAddressParam, checkUserIdParam);
     }
 
     public int modifyUserAddress(PatchUserReq patchUserReq) {
