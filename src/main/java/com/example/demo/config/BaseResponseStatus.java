@@ -22,10 +22,13 @@ public enum BaseResponseStatus {
     INVALID_JWT(false, 2002, "유효하지 않은 JWT입니다."),
     INVALID_USER_JWT(false,2003,"권한이 없는 유저의 접근입니다."),
     INVALID_REVIEW_SCORE(false, 2009, "별점이 유효한 값이 아닙니다."),
+    INVALID_DELIVERY_FEE(false, 2060, "배달비 설정값이 유효하지 않습니다."),
     NOT_EXISTS_USERID(false,2004,"해당하는 id가 없습니다."),
     NOT_EXISTS_ORDERID(false,2005, "해당하는 주문 번호가 없습니다."),
     NOT_EXISTS_ADDRESID(false, 2006, "해당하는 주소 id가 없습니다."),
     NOT_EXISTS_REVIEW_ID(false, 2007,"해당하는 리뷰 id가 없습니다."),
+    NOT_EXISTS_RESTAURANT_ID(false, 2050,"해당하는 가게 id가 없습니다."),
+    NOT_EXISTS_RESTAURANT_CATEGORY(false, 2051, "해당하는 카테고리가 없습니다."),
     WRONG_STATUS(false, 2008, "status를 다시 한번 확인하세요."),
 
     // users
@@ -43,7 +46,7 @@ public enum BaseResponseStatus {
     POST_USERS_EMPTY_STATUS(false,2024,"상태를 등록하세요."),
     POST_USERS_EMPTY_TEXT(false, 2025, "텍스트를 입력해주세요."),
     POST_USERS_WRITE_TOO_LONG_TEXT(false, 2030, "글자수는 100 글자를 넘길 수 없습니다."),
-
+    POST_RESTAURANT_EMPTY_RESTAURANT_ID(false, 2040, "가게 id를 입력해주세요."),
 
 
     /**

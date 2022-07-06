@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static com.example.demo.config.BaseResponseStatus.NOT_EXISTS_REVIEW_ID;
+import static com.example.demo.config.BaseResponseStatus.POST_RESTAURANT_EMPTY_RESTAURANT_ID;
+
 @RestController
 @RequestMapping("/app/restaurant")
 public class RestaurantController {
@@ -33,70 +36,116 @@ public class RestaurantController {
 
     /**
      * 이츠에만 있는 가게
+     * @param status
+     * @return BaseResponse<List<GetEatsOnlyMainRes>>
+     * @throws BaseException
      */
     @ResponseBody
-    @GetMapping("/EatsOnlyMain")
-    public BaseResponse<List<GetEatsOnlyMainRes>> getEatsOnlyMain() throws BaseException {
-        List<GetEatsOnlyMainRes> getEatsOnlyMainRes = restaurantProvider.getEatsOnlyMain();
+    @GetMapping("/EatsOnlyMain/{status}")
+    public BaseResponse<List<GetEatsOnlyMainRes>> getEatsOnlyMain(@PathVariable("status") String status)
+            throws BaseException {
+
+        List<GetEatsOnlyMainRes> getEatsOnlyMainRes = restaurantProvider.getEatsOnlyMain(status);
         return new BaseResponse<>(getEatsOnlyMainRes);
     }
 
     /**
      * 진행중인 이벤트 목록
+     * validation은 따로 필요없을듯?,,
+     * @return aseResponse<List<GetEventRes>>
+     * @throws BaseException
      */
     @GetMapping("/eventList")
     @ResponseBody
     public BaseResponse<List<GetEventRes>> getEventList() throws BaseException{
+
+        //List<GetEventRes> checkEventEndDate = restaurantProvider.checkEventEndDate();
+
         List<GetEventRes> getEventRes = restaurantProvider.getEventRes();
         return new BaseResponse<>(getEventRes);
     }
 
     /**
      * 가게의 메뉴들
+     * @param restaurant_Id
+     * @return BaseResponse<List<GetRestaurantMenuRes>>
+     * @throws BaseException
      */
     @GetMapping("/{restaurant_Id}")
     @ResponseBody
     public BaseResponse<List<GetRestaurantMenuRes>> getRestaurantMenuBase(@PathVariable("restaurant_Id") long restaurant_Id)  throws BaseException{
-        List<GetRestaurantMenuRes> getRestaurantMenuRes = restaurantProvider.getRestaurantMenu(restaurant_Id);
-        return new BaseResponse<>(getRestaurantMenuRes);
+
+        try {
+            List<GetRestaurantMenuRes> getRestaurantMenuRes = restaurantProvider.getRestaurantMenu(restaurant_Id);
+            return new BaseResponse<>(getRestaurantMenuRes);
+        }     catch(BaseException exception) {
+            return new BaseResponse<>(exception.getStatus());
+        }
     }
 
     /**
      * 회원의 즐겨찾기 가게
+     * @param userId
+     * @return BaseResponse<List<GetFavoriteRestaurantRes>>
+     * @throws BaseException
      */
     @GetMapping("/{user_Id}/favoriteRestaurant")
     @ResponseBody
-    public BaseResponse<List<GetFavoriteRestaurantRes>> getFavoriteRestaurantList(@PathVariable("user_Id") String user_Id) throws BaseException{
-        List<GetFavoriteRestaurantRes> getFavoriteRestaurantResList = restaurantProvider.getFavoriteRestaurant(user_Id);
-        return new BaseResponse<>(getFavoriteRestaurantResList);
+    public BaseResponse<List<GetFavoriteRestaurantRes>> getFavoriteRestaurantList(@PathVariable("userId") String userId) throws BaseException{
+
+        try {
+            List<GetFavoriteRestaurantRes> getFavoriteRestaurantResList = restaurantProvider.getFavoriteRestaurant(userId);
+            return new BaseResponse<>(getFavoriteRestaurantResList);
+        } catch(BaseException exception) {
+            return new BaseResponse<>(exception.getStatus());
+        }
     }
 
     /**
-     * 음식 카테고리에 따른 가게 리스트
+     * 음식 카테고리와 배송비에 따른 가게 리스트
+     * @param categoryName
+     * @param lowPrice
+     * @param highPrice
+     * @return BaseResponse<List<GetRestaurantListRes>>
      */
     @GetMapping("/category")
     @ResponseBody
-    public BaseResponse<List<GetRestaurantListRes>> getRestaurantList(@RequestParam(value = "category_Name") String category_Name,
+    public BaseResponse<List<GetRestaurantListRes>> getRestaurantList(@RequestParam(value = "categoryName") String categoryName,
                                                                       @RequestParam(value = "lowPrice") int lowPrice,
-                                                                      @RequestParam(value = "highPrice") int highPrice){
-        System.out.println(category_Name);
-        List<GetRestaurantListRes> getRestaurantListRes = restaurantProvider.getRestaurantList(category_Name, lowPrice, highPrice);
-        return new BaseResponse<>(getRestaurantListRes);
+                                                                      @RequestParam(value = "highPrice") int highPrice) throws BaseException {
+        // categoryName ~ highPrice 까지 아예 값이 들어오지 않았을 경우 예외처리 해야함
+        System.out.println(categoryName);
+
+        try {
+            List<GetRestaurantListRes> getRestaurantListRes = restaurantProvider.getRestaurantList(categoryName, lowPrice, highPrice);
+            return new BaseResponse<>(getRestaurantListRes);
+        } catch(BaseException exception) {
+            return new BaseResponse<>(exception.getStatus());
+        }
     }
 
     /**
-     * 식당의 리뷰 목록
+     * 가게의 전체 리뷰 목록 조회
+     * @param restaurantId
+     * @return BaseResponse<List<GetRestaurantReviewRes>>
      */
     @GetMapping("/{restaurantId}/reviewList")
     @ResponseBody
     public BaseResponse<List<GetRestaurantReviewRes>> getRestaurantReviewRes(@PathVariable("restaurantId") long restaurantId){
-        List<GetRestaurantReviewRes> getRestaurantReviewResList = restaurantProvider.getRestaurantReviewList(restaurantId);
-        return new BaseResponse<>(getRestaurantReviewResList);
+
+        //restaurantId 값이 아예 없는 경우 예외 추가
+
+        try {
+            List<GetRestaurantReviewRes> getRestaurantReviewResList = restaurantProvider.getRestaurantReviewList(restaurantId);
+            return new BaseResponse<>(getRestaurantReviewResList);
+        } catch(BaseException exception) {
+            return new BaseResponse<>(exception.getStatus());
+        }
     }
 
     /**
      * 인기있는 프랜차이즈 목록
-     * @return
+     * @return BaseResponse<List<GetFamousFranchiseRes>>
      */
     @GetMapping("/franchise")
     @ResponseBody

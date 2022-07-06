@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.sql.Timestamp;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -11,6 +13,6 @@ public class GetEventRes {
 
     private String eventName;
     private String file;
-    private String endDate;
+    private Timestamp endDate;
     private String status;
 }

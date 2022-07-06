@@ -54,8 +54,7 @@ public class ReviewDAO {
                         rs.getInt("reviewScore"),
                         rs.getString("reviewText"),
                         rs.getTimestamp("createdAt"),
-                        rs.getString("foodName")
-                ),
+                        rs.getString("foodName")),
                 getOrderId, getUserId);
     }
 

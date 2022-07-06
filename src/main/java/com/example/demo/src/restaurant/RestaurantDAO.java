@@ -6,6 +6,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
+import java.sql.Timestamp;
 import java.util.List;
 
 @Repository
@@ -161,8 +162,8 @@ public class RestaurantDAO {
         );
     }
 
-    public List<GetEatsOnlyMainRes> getEatsOnlyMain() {
-        String getEatsOnlyMain = "SELECT Restaurant.eatsOnly AS eatsOnly,\n" +
+    public List<GetEatsOnlyMainRes> getEatsOnlyMain(String status) {
+        String getEatsOnlyMainQuery = "SELECT Restaurant.eatsOnly AS eatsOnly,\n" +
                 "       Image.file AS file,\n" +
                 "       Restaurant.name AS name,\n" +
                 "       Restaurant.reviewScore AS reviewScore,\n" +
@@ -170,27 +171,71 @@ public class RestaurantDAO {
                 "       Restaurant.packaging AS packaging\n" +
                 "FROM Restaurant INNER JOIN Restaurant_Main_Img ON Restaurant.restaurantId = Restaurant_Main_Img.restaurantId\n" +
                 "INNER JOIN Image ON Image.imgId = Restaurant_Main_Img.imgId\n" +
-                "WHERE Restaurant.eatsOnly = 'active'";
-        return this.jdbcTemplate.query(getEatsOnlyMain,
+                "WHERE Restaurant.eatsOnly = ?";
+        String getEatsOnlyMainParam = status;
+        return this.jdbcTemplate.query(getEatsOnlyMainQuery,
                 (rs, rowNum) -> new GetEatsOnlyMainRes(
                         rs.getString("eatsOnly"),
                         rs.getString("file"),
                         rs.getString("name"),
                         rs.getDouble("reviewScore"),
                         rs.getInt("deliveryFee"),
-                        rs.getString("packaging"))
-        );
+                        rs.getString("packaging")),
+                        getEatsOnlyMainParam);
+    }
+
+    //event 기간이 지났는지 안지났는지 확인하고 status를 변경하는 메소드
+    public void checkEventEndDate(){
+        String checkEventEndDateQuery = "update Event set status  = 'deregister' where  endDate < ?";
+        Timestamp dateNow = new Timestamp(System.currentTimeMillis());
+        Object[] checkEventEndDateParam = new Object[]{dateNow};
+
+        this.jdbcTemplate.update(checkEventEndDateQuery, checkEventEndDateParam);
     }
 
     public List<GetEventRes> getEventList() {
+
+        checkEventEndDate();
+
         String getEventList = "SELECT Event.eventName, Image.file, Event.endDate, Event.status\n" +
                 "FROM Event INNER JOIN Image ON Event.imgId = Image.imgId";
         return this.jdbcTemplate.query(getEventList,
                 (rs, rowNum) -> new GetEventRes(
                         rs.getString("eventName"),
                         rs.getString("file"),
-                        rs.getString("endDate"),
+                        rs.getTimestamp("endDate"),
                         rs.getString("status"))
         );
+    }
+
+    // 입력받은 status의 스펠링을 확인하는 메소드
+    public boolean checkStatus(String status){
+        if(status.equals("active") || status.equals("inactive")){
+            return true;
+        }
+
+        return false;
+    }
+
+    //가게id 확인하는 메소드
+    public int checkRestaurantId(long restaurantId){
+        String checkRestaurantIdQuery = "select exists(select orderId from Order_Food where orderId = ?)";
+        long checkRestaurantIdParam = restaurantId;
+        return this.jdbcTemplate.queryForObject(checkRestaurantIdQuery, int.class, checkRestaurantIdParam);
+    }
+
+    public int checkCategoryName(String categoryName){
+        String checkCategoryNameQuery = "select exists(select name from Restaurant_Category where name = ?";
+        String checkCategoryParam = categoryName;
+        return this.jdbcTemplate.queryForObject(checkCategoryNameQuery, int.class, checkCategoryParam);
+    }
+
+    public boolean checkDeliveryFee(int lowPrice, int highPrice){
+        if(lowPrice < 0 || highPrice > 10000){
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 }
