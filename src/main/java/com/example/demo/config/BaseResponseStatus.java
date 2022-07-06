@@ -23,6 +23,7 @@ public enum BaseResponseStatus {
     INVALID_USER_JWT(false,2003,"권한이 없는 유저의 접근입니다."),
     NOT_EXISTS_USERID(false,2004,"해당하는 id가 없습니다."),
     NOT_EXISTS_ORDERID(false,2005, "해당하는 주문 번호가 없습니다."),
+    NOT_EXISTS_ADDRESID(false, 2006, "해당하는 주소 id가 없습니다."),
 
     // users
     USERS_EMPTY_USER_ID(false, 2010, "유저 아이디 값을 확인해주세요."),
@@ -33,11 +34,10 @@ public enum BaseResponseStatus {
     POST_USERS_EXISTS_EMAIL(false,2017,"중복된 이메일입니다."),
 
     POST_USERS_EMPTY_NAME(false, 2020, "이름을 입력해주세요." ),
-    POST_USERS_EMPTY_ADDRESS(false, 2021, "주소를 입력해주세요"),
+    POST_USERS_EMPTY_ADDRESS(false, 2021, "주소를 입력해주세요."),
     POST_USERS_EMPTY_PHONENUM(false, 2022, "휴대폰 번호를 입력해주세요"),
     POST_USERS_EMPTY_PASSWORD(false, 2023, "비밀번호를 설정하세요."),
     POST_USERS_EMPTY_STATUS(false,2024,"상태를 등록하세요."),
-
 
 
     /**

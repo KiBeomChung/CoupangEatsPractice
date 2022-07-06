@@ -90,12 +90,14 @@ public class UserDao {
 
     }
 
+    //유저 id가 존재하는지 확인하는 메소드
     public int checkUserId(String userId){
         String checkUserIdQuery ="select exists(select userId from User where userId = ?)";
         String checkUserParam = userId;
         return this.jdbcTemplate.queryForObject(checkUserIdQuery, int.class, checkUserParam);
     }
 
+    //주문번호 확인하는 메소드
     public int checkOrderId(long orderId){
         String checkOrderIdQuery = "select exists(select orderId from Order_Food where orderId = ?)";
         long checkOrderIdParam = orderId;
@@ -110,6 +112,14 @@ public class UserDao {
         return this.jdbcTemplate.queryForObject(isMultipleAddressQuery, int.class, checkAddressParam, checkUserIdParam);
     }
 
+    // 해당 addrssId가 있는지 확인하는 메소드
+    public int checkAddressId(long addressId){
+        String checkAddressIdQuery = "select exists(select addressId from address where addressId = ?)";
+        long checkAddressIdParam = addressId;
+        return this.jdbcTemplate.queryForObject(checkAddressIdQuery, int.class, checkAddressIdParam);
+    }
+
+    // 주소의 닉네임을 변경하는 메소드
     public int modifyUserAddress(PatchUserReq patchUserReq) {
 
         String modifyUserAddressQuery = "update User set address = ? where userId = ? ";

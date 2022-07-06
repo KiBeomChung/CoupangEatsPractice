@@ -82,8 +82,13 @@ public class UserService {
         return new PostUserAddressRes(userId);
     }
 
-    public void modifyAddressNickname(PatchUserAddressNicknameReq patchUserAddressNicknameReq){
-        int result = userDao.modifyAddressNickname(patchUserAddressNicknameReq);
+    public void modifyAddressNickname(PatchUserAddressNicknameReq patchUserAddressNicknameReq) throws BaseException {
+
+        if(userDao.checkUserId(patchUserAddressNicknameReq.getUserId()) == 0){ // db에 입력받은 userId가 존재하는지 확인
+            throw new BaseException(NOT_EXISTS_USERID);
+        }
+
+        userDao.modifyAddressNickname(patchUserAddressNicknameReq);
     }
 
 

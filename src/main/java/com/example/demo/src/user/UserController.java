@@ -257,15 +257,35 @@ public class UserController {
         }
     }
 
+    /**
+     * @param userId
+     * @param userId, addressId, PatchUserAddressNickNameReq
+     * @return BaseResponse<String>
+     */
     @PatchMapping("/{userId}/myAddressList/add/{addressId}")
     @ResponseBody
     public BaseResponse<String> modifyAddressNickname(@PathVariable("userId") String userId,
                                                       @PathVariable("addressId") long addressId,
-                                                      @RequestBody PatchUserAddressNicknameReq patchUserAddressNicknameReq){
-        PatchUserAddressNicknameReq patchUserAddressNicknameReq1 = new PatchUserAddressNicknameReq(userId, addressId, patchUserAddressNicknameReq.getAddressName());
-        userService.modifyAddressNickname(patchUserAddressNicknameReq1);
-        String result = "변경 완료하였습니다.";
-        return new BaseResponse<>(result);
+                                                      @RequestBody PatchUserAddressNicknameReq patchUserAddressNicknameReq) throws BaseException {
+
+        if (userId == null) { //userId의 값이 없을떄
+            return new BaseResponse<>(USERS_EMPTY_USER_ID);
+        }
+        if(patchUserAddressNicknameReq.getAddressName() == null){
+            return new BaseResponse<>(POST_USERS_EMPTY_ADDRESS);
+        }
+
+        //addressId 값이 없을때 예외 처리?
+        try {
+            PatchUserAddressNicknameReq patchUserAddressNicknameReq1 = new PatchUserAddressNicknameReq(userId, addressId, patchUserAddressNicknameReq.getAddressName());
+            userService.modifyAddressNickname(patchUserAddressNicknameReq1);
+
+            String result = "변경 완료하였습니다.";
+            return new BaseResponse<>(result);
+
+        } catch (BaseException exception) {
+            return new BaseResponse<>(exception.getStatus());
+        }
     }
 }
 
