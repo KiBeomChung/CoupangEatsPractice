@@ -21,9 +21,12 @@ public enum BaseResponseStatus {
     EMPTY_JWT(false, 2001, "JWT를 입력해주세요."),
     INVALID_JWT(false, 2002, "유효하지 않은 JWT입니다."),
     INVALID_USER_JWT(false,2003,"권한이 없는 유저의 접근입니다."),
+    INVALID_REVIEW_SCORE(false, 2009, "별점이 유효한 값이 아닙니다."),
     NOT_EXISTS_USERID(false,2004,"해당하는 id가 없습니다."),
     NOT_EXISTS_ORDERID(false,2005, "해당하는 주문 번호가 없습니다."),
     NOT_EXISTS_ADDRESID(false, 2006, "해당하는 주소 id가 없습니다."),
+    NOT_EXISTS_REVIEW_ID(false, 2007,"해당하는 리뷰 id가 없습니다."),
+    WRONG_STATUS(false, 2008, "status를 다시 한번 확인하세요."),
 
     // users
     USERS_EMPTY_USER_ID(false, 2010, "유저 아이디 값을 확인해주세요."),
@@ -38,6 +41,9 @@ public enum BaseResponseStatus {
     POST_USERS_EMPTY_PHONENUM(false, 2022, "휴대폰 번호를 입력해주세요"),
     POST_USERS_EMPTY_PASSWORD(false, 2023, "비밀번호를 설정하세요."),
     POST_USERS_EMPTY_STATUS(false,2024,"상태를 등록하세요."),
+    POST_USERS_EMPTY_TEXT(false, 2025, "텍스트를 입력해주세요."),
+    POST_USERS_WRITE_TOO_LONG_TEXT(false, 2030, "글자수는 100 글자를 넘길 수 없습니다."),
+
 
 
     /**

@@ -1,5 +1,6 @@
 package com.example.demo.src.review;
 
+import com.example.demo.config.BaseException;
 import com.example.demo.src.review.model.GetUserReviewRes;
 import com.example.demo.src.review.model.PatchUserReviewDeleteReq;
 import com.example.demo.src.review.model.PatchUserReviewReq;
@@ -9,6 +10,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
+
+import static com.example.demo.config.BaseResponseStatus.NOT_EXISTS_USERID;
 
 @Repository
 public class ReviewDAO {
@@ -70,6 +73,15 @@ public class ReviewDAO {
         Object[] deleteUserReviewParam = new Object[]{patchUserReviewDeleteReq.getStatus(), patchUserReviewDeleteReq.getReviewId(), patchUserReviewDeleteReq.getUserId()};
 
         return this.jdbcTemplate.update(deleteUserReviewQuery, deleteUserReviewParam);
+    }
+
+    public boolean checkStatusStr(PatchUserReviewDeleteReq patchUserReviewDeleteReq){
+        if(patchUserReviewDeleteReq.getStatus().equals("register") || patchUserReviewDeleteReq.getStatus().equals("deregister")){
+            return false;
+        }
+        else {
+            return true;
+        }
     }
 
 }
