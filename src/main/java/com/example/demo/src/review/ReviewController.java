@@ -3,8 +3,6 @@ package com.example.demo.src.review;
 import com.example.demo.config.BaseException;
 import com.example.demo.config.BaseResponse;
 import com.example.demo.src.review.model.*;
-import com.example.demo.src.user.UserProvider;
-import com.example.demo.src.user.UserService;
 import com.example.demo.utils.JwtService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -127,20 +125,19 @@ public class ReviewController {
      * 리뷰 삭제
      * @param userId
      * @param reviewId
-     * @param patchUserReviewDeleteReq
+     * @param
      * @return BaseResponse<String>
      */
-    @PatchMapping("/delete/{userId}/{reviewId}")
-    @ResponseBody
+    @DeleteMapping("/delete/{userId}/{reviewId}")
     public BaseResponse<String> deleteUserReview(@PathVariable("userId") String userId,
-                                                 @PathVariable("reviewId") long reviewId,
-                                                 @RequestBody PatchUserReviewDeleteReq patchUserReviewDeleteReq){
+                                                 @PathVariable("reviewId") long reviewId
+                                                 ){
 
         try {
-            PatchUserReviewDeleteReq patchUserReviewDeleteReq1 = new PatchUserReviewDeleteReq(userId, reviewId, patchUserReviewDeleteReq.getStatus());
-            reviewService.deleteUserReview(patchUserReviewDeleteReq1);
+            DeleteUserReviewDeleteReq deleteUserReviewDeleteReq1 = new DeleteUserReviewDeleteReq(userId, reviewId);
+            reviewService.deleteUserReview(deleteUserReviewDeleteReq1);
 
-            String result = "상태변경 완료하였습니다.";
+            String result = "삭제 완료하였습니다.";
             return new BaseResponse<>(result);
         } catch(BaseException exception) {
             return new BaseResponse<>(exception.getStatus());

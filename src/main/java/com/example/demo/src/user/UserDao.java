@@ -1,10 +1,6 @@
 package com.example.demo.src.user;
 
 
-import com.example.demo.src.review.model.GetUserReviewRes;
-import com.example.demo.src.review.model.PatchUserReviewDeleteReq;
-import com.example.demo.src.review.model.PatchUserReviewReq;
-import com.example.demo.src.review.model.PostUserReviewReq;
 import com.example.demo.src.user.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;

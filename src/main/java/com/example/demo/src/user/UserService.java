@@ -3,10 +3,6 @@ package com.example.demo.src.user;
 
 
 import com.example.demo.config.BaseException;
-import com.example.demo.src.review.model.PatchUserReviewDeleteReq;
-import com.example.demo.src.review.model.PatchUserReviewReq;
-import com.example.demo.src.review.model.PostUserReviewReq;
-import com.example.demo.src.review.model.PostUserReviewRes;
 import com.example.demo.src.user.model.*;
 import com.example.demo.utils.JwtService;
 import org.slf4j.Logger;

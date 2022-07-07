@@ -7,9 +7,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class PatchUserReviewDeleteReq {
+public class DeleteUserReviewDeleteReq {
 
     private String userId;
     private long reviewId;
-    private String status;
 }

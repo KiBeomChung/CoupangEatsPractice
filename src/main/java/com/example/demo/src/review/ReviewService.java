@@ -1,12 +1,11 @@
 package com.example.demo.src.review;
 
 import com.example.demo.config.BaseException;
-import com.example.demo.src.review.model.PatchUserReviewDeleteReq;
+import com.example.demo.src.review.model.DeleteUserReviewDeleteReq;
 import com.example.demo.src.review.model.PatchUserReviewReq;
 import com.example.demo.src.review.model.PostUserReviewReq;
 import com.example.demo.src.review.model.PostUserReviewRes;
 import com.example.demo.src.user.UserDao;
-import com.example.demo.src.user.UserProvider;
 import com.example.demo.utils.JwtService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -62,17 +61,16 @@ public class ReviewService {
         int result = reviewDao.modifyUserReview(patchUserReviewReq);
     }
 
-    public void deleteUserReview(PatchUserReviewDeleteReq patchUserReviewDeleteReq) throws BaseException {
+    public void deleteUserReview(DeleteUserReviewDeleteReq deleteUserReviewDeleteReq) throws BaseException {
 
-        if(userDao.checkUserId(patchUserReviewDeleteReq.getUserId()) == 0){ //동일한 유저 id가 없을경우
+        if(userDao.checkUserId(deleteUserReviewDeleteReq.getUserId()) == 0){ //동일한 유저 id가 없을경우
             throw new BaseException(NOT_EXISTS_USERID);
         }
-        if(userDao.checkOrderId(patchUserReviewDeleteReq.getReviewId()) == 0){ //db에 입력받은 orderId가 존재하는지 확인
+        if(userDao.checkOrderId(deleteUserReviewDeleteReq.getReviewId()) == 0){ //db에 입력받은 orderId가 존재하는지 확인
             throw new BaseException(NOT_EXISTS_REVIEW_ID);
         }
-        if(reviewDao.checkStatusStr(patchUserReviewDeleteReq)){ //입력한 상태가 올바르지 않을 경우
-            throw new BaseException(WRONG_STATUS);
-        }
+
+        reviewDao.deleteUserReview(deleteUserReviewDeleteReq);
     }
 
     // 별점이 0점 미만 or 5점 초과일 경우를 확인하는 메소드
