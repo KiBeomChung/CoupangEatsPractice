@@ -15,4 +15,5 @@ public class PostUserReq {
     private String password;
     private String phone_Num;
     private String address;
+    private int userIdx;
 }

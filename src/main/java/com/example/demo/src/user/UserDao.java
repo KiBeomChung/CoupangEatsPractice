@@ -68,9 +68,9 @@ public class UserDao {
 
 
     public String createUser(PostUserReq postUserReq) {
-        String createUserQuery = "insert into User (userId, name, password, phone_Num, address) VALUES (?,?,?,?,?)";
+        String createUserQuery = "insert into User (userId, name, password, phone_Num, address, userIdx) VALUES (?,?,?,?,?,?)";
         Object[] createUserParams = new Object[]{postUserReq.getUserId(), postUserReq.getName(), postUserReq.getPassword(), postUserReq.getPhone_Num(),
-                postUserReq.getAddress()};
+                postUserReq.getAddress(), postUserReq.getUserIdx()};
         this.jdbcTemplate.update(createUserQuery, createUserParams); // 데이터베이스에 저장
 
         String lastInsertIdQuery = "select last_insert_id()";

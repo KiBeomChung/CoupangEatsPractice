@@ -1,15 +1,15 @@
 com/example/demo/src/review/model/GetUserReviewRes.java
  com.example.demo.src.review.model.GetUserReviewRes
-com/example/demo/src/user/model/PostUserReq.java
- com.example.demo.src.user.model.PostUserReq
+com/example/demo/src/user/model/User.java
+ com.example.demo.src.user.model.User
 com/example/demo/config/Constant.java
  com.example.demo.config.Constant
 com/example/demo/src/restaurant/model/GetRestaurantListRes.java
  com.example.demo.src.restaurant.model.GetRestaurantListRes
 com/example/demo/utils/ValidationRegex.java
  com.example.demo.utils.ValidationRegex
-com/example/demo/src/user/model/PostLoginRes.java
- com.example.demo.src.user.model.PostLoginRes
+com/example/demo/src/user/UserDao.java
+ com.example.demo.src.user.UserDao
 com/example/demo/src/review/model/PatchUserReviewReq.java
  com.example.demo.src.review.model.PatchUserReviewReq
 com/example/demo/src/restaurant/model/GetEatsOnlyMainRes.java
@@ -64,18 +64,14 @@ com/example/demo/src/restaurant/model/GetRestaurantReviewRes.java
  com.example.demo.src.restaurant.model.GetRestaurantReviewRes
 com/example/demo/src/restaurant/RestaurantDAO.java
  com.example.demo.src.restaurant.RestaurantDAO
-com/example/demo/utils/JwtService.java
- com.example.demo.utils.JwtService
+com/example/demo/src/user/model/PostUserReq.java
+ com.example.demo.src.user.model.PostUserReq
 com/example/demo/config/BaseException.java
  com.example.demo.config.BaseException
 com/example/demo/config/BaseResponseStatus.java
  com.example.demo.config.BaseResponseStatus
 com/example/demo/config/BaseResponse.java
  com.example.demo.config.BaseResponse
-com/example/demo/src/user/model/User.java
- com.example.demo.src.user.model.User
-com/example/demo/src/user/UserDao.java
- com.example.demo.src.user.UserDao
 com/example/demo/src/restaurant/RestaurantService.java
  com.example.demo.src.restaurant.RestaurantService
 com/example/demo/src/user/UserService.java
@@ -88,9 +84,13 @@ com/example/demo/src/review/ReviewProvider.java
  com.example.demo.src.review.ReviewProvider
 com/example/demo/src/review/ReviewController.java
  com.example.demo.src.review.ReviewController
+com/example/demo/utils/JwtService.java
+ com.example.demo.utils.JwtService
 com/example/demo/src/user/UserController.java
  com.example.demo.src.user.UserController
 com/example/demo/src/user/UserProvider.java
  com.example.demo.src.user.UserProvider
+com/example/demo/src/user/model/PostLoginRes.java
+ com.example.demo.src.user.model.PostLoginRes
 com/example/demo/src/review/ReviewService.java
  com.example.demo.src.review.ReviewService

@@ -89,15 +89,46 @@ public class UserProvider {
         }
 
         if(postLoginReq.getPassword().equals(password)){
-            int userIdx = userDao.getPwd(postLoginReq).getUserIdx();
-            String jwt = jwtService.createJwt(userIdx);
-            return new PostLoginRes(userIdx,jwt);
+            String userId = userDao.getPwd(postLoginReq).getUserId();
+            String jwt = jwtService.createJwt(userId);
+            return new PostLoginRes(userId,jwt);
         }
         else{
             throw new BaseException(FAILED_TO_LOGIN);
         }
 
     }
+
+//        if(postLoginReq.getPassword().equals(password)){
+//            String userId = userDao.getPwd(postLoginReq).getUserId();
+//            String jwt = jwtService.createJwt(userId);
+//            return new PostLoginRes(userId,jwt);
+//        }
+//        else{
+//            throw new BaseException(FAILED_TO_LOGIN);
+//        }
+//
+//    }
+
+//    public PostLoginRes logIn(PostLoginReq postLoginReq) throws BaseException{
+//        User user = userDao.getPwd(postLoginReq);
+//        String password;
+//        try {
+//            password = new AES128(Secret.USER_INFO_PASSWORD_KEY).decrypt(user.getPassword());
+//        } catch (Exception ignored) {
+//            throw new BaseException(PASSWORD_DECRYPTION_ERROR);
+//        }
+//
+//        if(postLoginReq.getPassword().equals(password)){
+//            int userIdx = userDao.getPwd(postLoginReq).getUserIdx();
+//            String jwt = jwtService.createJwt(userIdx);
+//            return new PostLoginRes(userIdx,jwt);
+//        }
+//        else{
+//            throw new BaseException(FAILED_TO_LOGIN);
+//        }
+//
+//    }
 
     public GetReceiptRes getReceiptRes(String userId, long orderId) throws Exception{
 
