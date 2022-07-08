@@ -60,7 +60,7 @@ public class UserService {
        // try{
             int result = userDao.modifyUserAddress(patchUserReq);
             if(result == 0){
-                throw new BaseException(MODIFY_FAIL_USERNAME);
+                throw new BaseException(MODIFY_FAIL_USER_ADDRESS);
             }
 //        } catch(Exception exception){
 //            throw new BaseException(DATABASE_ERROR);
@@ -73,9 +73,12 @@ public class UserService {
         if(userDao.isMultipleAddress(postUserAddressReq.getRealAddress(), userId) != 0){
             throw new BaseException(DUPLICATED_ADDRESS);
         }
+        if(userDao.checkUserId(userId) == 0){ // db에 입력받은 userId가 존재하는지 확인
+            throw new BaseException(NOT_EXISTS_USERID);
+        }
 
         String user_Id = userDao.addUserAddress(postUserAddressReq, userId);
-        return new PostUserAddressRes(userId);
+        return new PostUserAddressRes(user_Id);
     }
 
     public void modifyAddressNickname(PatchUserAddressNicknameReq patchUserAddressNicknameReq) throws BaseException {
