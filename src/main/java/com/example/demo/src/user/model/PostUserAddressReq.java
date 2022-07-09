@@ -9,7 +9,6 @@ import lombok.Setter;
 @AllArgsConstructor
 public class PostUserAddressReq {
 
-    private String userId;
     private String addressName;
     private String realAddress;
     private String status;

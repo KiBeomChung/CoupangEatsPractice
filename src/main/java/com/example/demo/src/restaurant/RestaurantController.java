@@ -12,8 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static com.example.demo.config.BaseResponseStatus.NOT_EXISTS_REVIEW_ID;
-import static com.example.demo.config.BaseResponseStatus.POST_RESTAURANT_EMPTY_RESTAURANT_ID;
+import static com.example.demo.config.BaseResponseStatus.*;
 
 @RestController
 @RequestMapping("/app/restaurant")
@@ -89,9 +88,14 @@ public class RestaurantController {
      * @return BaseResponse<List<GetFavoriteRestaurantRes>>
      * @throws BaseException
      */
-    @GetMapping("/{user_Id}/favoriteRestaurant")
+    @GetMapping("/{userId}/favoriteRestaurant")
     @ResponseBody
     public BaseResponse<List<GetFavoriteRestaurantRes>> getFavoriteRestaurantList(@PathVariable("userId") String userId) throws BaseException{
+
+        String userIdByJwt = jwtService.getUserId();
+        if(!userId.equals(userIdByJwt)){
+            return new BaseResponse<>(INVALID_USER_JWT);
+        }
 
         try {
             List<GetFavoriteRestaurantRes> getFavoriteRestaurantResList = restaurantProvider.getFavoriteRestaurant(userId);

@@ -9,8 +9,6 @@ import lombok.Setter;
 @AllArgsConstructor
 public class PostUserReviewReq {
 
-    private String userId;
     private String reviewText;
     private int reviewScore;
-    private int orderId;
 }

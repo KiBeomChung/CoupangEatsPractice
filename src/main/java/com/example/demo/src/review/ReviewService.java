@@ -37,7 +37,7 @@ public class ReviewService {
         if(userDao.checkOrderId(orderId) == 0){ //db에 입력받은 orderId가 존재하는지 확인
             throw new BaseException(NOT_EXISTS_ORDERID);
         }
-        if(userDao.checkUserId(postUserReviewReq.getUserId()) == 0){ // db에 입력받은 userId가 존재하는지 확인
+        if(userDao.checkUserId(userId) == 0){ // db에 입력받은 userId가 존재하는지 확인
             throw new BaseException(NOT_EXISTS_USERID);
         }
 
@@ -66,7 +66,7 @@ public class ReviewService {
         if(userDao.checkUserId(deleteUserReviewDeleteReq.getUserId()) == 0){ //동일한 유저 id가 없을경우
             throw new BaseException(NOT_EXISTS_USERID);
         }
-        if(userDao.checkOrderId(deleteUserReviewDeleteReq.getReviewId()) == 0){ //db에 입력받은 orderId가 존재하는지 확인
+        if(userDao.checkReviewId(deleteUserReviewDeleteReq.getReviewId()) == 0){ //db에 입력받은 orderId가 존재하는지 확인
             throw new BaseException(NOT_EXISTS_REVIEW_ID);
         }
 

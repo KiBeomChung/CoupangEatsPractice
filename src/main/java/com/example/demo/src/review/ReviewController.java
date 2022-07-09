@@ -52,6 +52,11 @@ public class ReviewController {
         }
         // + orderId, + reviewScore 의 값이 null값 일때 예외처리 메소드
 
+        String userIdByJwt = jwtService.getUserId();
+        if(!userId.equals(userIdByJwt)){
+            return new BaseResponse<>(INVALID_USER_JWT);
+        }
+
         if(postUserReviewReq.getReviewText() == null) { // 리뷰 부분이 nulll 일때 예외처리 (null과 공백은 다름, 공백일때는 문제 x)
             return new BaseResponse<>(POST_USERS_EMPTY_TEXT);
         }
@@ -69,13 +74,18 @@ public class ReviewController {
      * @param orderId
      * @return BaseResponse<GetUserReviewRes>
      */
-    @GetMapping("/a/{userId}/b/{orderId}")
+    @GetMapping("/{userId}/{orderId}")
     @ResponseBody
     public BaseResponse<GetUserReviewRes> getUserReviewResBaseResponse(@PathVariable("userId") String userId,
                                                                        @PathVariable("orderId") long orderId) throws BaseException {
 
         if(userId == null){ //userId의 값이 없을떄
             return new BaseResponse<>(USERS_EMPTY_USER_ID);
+        }
+
+        String userIdByJwt = jwtService.getUserId();
+        if(!userId.equals(userIdByJwt)){
+            return new BaseResponse<>(INVALID_USER_JWT);
         }
         // + orderId의 값이 null값 일때 예외처리 메소드
         try {
@@ -98,6 +108,12 @@ public class ReviewController {
     public BaseResponse<String> modifyUserReview(@PathVariable("userId") String userId,
                                                  @PathVariable("orderId") long orderId,
                                                  @RequestBody PatchUserReviewReq patchUserReviewReq) throws BaseException {
+
+        String userIdByJwt = jwtService.getUserId();
+        if(!userId.equals(userIdByJwt)){
+            return new BaseResponse<>(INVALID_USER_JWT);
+        }
+
         if(userId == null){ //userId의 값이 없을떄
             return new BaseResponse<>(USERS_EMPTY_USER_ID);
         }
@@ -131,7 +147,12 @@ public class ReviewController {
     @DeleteMapping("/delete/{userId}/{reviewId}")
     public BaseResponse<String> deleteUserReview(@PathVariable("userId") String userId,
                                                  @PathVariable("reviewId") long reviewId
-                                                 ){
+                                                 ) throws BaseException {
+
+        String userIdByJwt = jwtService.getUserId();
+        if(!userId.equals(userIdByJwt)){
+            return new BaseResponse<>(INVALID_USER_JWT);
+        }
 
         try {
             DeleteUserReviewDeleteReq deleteUserReviewDeleteReq1 = new DeleteUserReviewDeleteReq(userId, reviewId);

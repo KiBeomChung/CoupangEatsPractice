@@ -21,10 +21,9 @@ public class ReviewDAO {
     }
 
     public String writeReview(PostUserReviewReq postUserReviewReq, String userId, long orderId) {
-        String getUserId = userId;
         String writeReviewQuery = "insert into Review (userId, reviewText, reviewScore, orderId) VALUES (?,?,?,?)";
-        Object[] writeReviewParams = new Object[]{postUserReviewReq.getUserId(), postUserReviewReq.getReviewText(),
-                postUserReviewReq.getReviewScore(), postUserReviewReq.getOrderId()};
+        Object[] writeReviewParams = new Object[]{userId, postUserReviewReq.getReviewText(),
+                postUserReviewReq.getReviewScore(), orderId};
         this.jdbcTemplate.update(writeReviewQuery, writeReviewParams);
 
         String lastInsertIdQuery = "select last_insert_id()";

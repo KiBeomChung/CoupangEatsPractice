@@ -65,6 +65,7 @@ public class JwtService {
     public  String getUserId() throws BaseException{
         //1. JWT 추출
         String accessToken = getJwt(); // 헤더의 값이 accessToken 안에 저장
+        System.out.println("accessToken: " + accessToken);
         if(accessToken == null || accessToken.length() == 0){ // 헤더에 아무것도 안들어있을 경우 예외처리
             throw new BaseException(EMPTY_JWT);
         } //일단 jwt 추출까지는 정상적으로 이루어짐

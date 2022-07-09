@@ -142,7 +142,6 @@ public class UserController {
         try {
             //jwt에서 id 추출.
             String userIdByJwt = jwtService.getUserId();
-            System.out.println("userIdByJwt: " + userIdByJwt);
             //userId와 접근한 유저가 같은지 확인
             if(!userId.equals(userIdByJwt)){
                 return new BaseResponse<>(INVALID_USER_JWT);
@@ -201,6 +200,10 @@ public class UserController {
             return new BaseResponse<>(USERS_EMPTY_USER_ID);
         }
 
+        String userIdByJwt = jwtService.getUserId();
+        if(!userId.equals(userIdByJwt)){
+            return new BaseResponse<>(INVALID_USER_JWT);
+        }
         //orderId의 값이 없을때는 어떻게 해야할까? long 형식은 null 값이 없는데,,
 
         try{
@@ -226,6 +229,11 @@ public class UserController {
             return new BaseResponse<>(USERS_EMPTY_USER_ID);
         }
 
+        String userIdByJwt = jwtService.getUserId();
+        if(!userId.equals(userIdByJwt)){
+            return new BaseResponse<>(INVALID_USER_JWT);
+        }
+
         try {
             List<GetOrderListRes> getOrderListRes = userProvider.getOrderListRes(userId);
             return new BaseResponse<>(getOrderListRes);
@@ -247,6 +255,11 @@ public class UserController {
 
         if (userId == null) { //userId의 값이 없을떄
             return new BaseResponse<>(USERS_EMPTY_USER_ID);
+        }
+
+        String userIdByJwt = jwtService.getUserId();
+        if(!userId.equals(userIdByJwt)){
+            return new BaseResponse<>(INVALID_USER_JWT);
         }
 
         try {
@@ -278,6 +291,11 @@ public class UserController {
             return new BaseResponse<>(POST_USERS_EMPTY_STATUS);
         }
 
+        String userIdByJwt = jwtService.getUserId();
+        if(!userId.equals(userIdByJwt)){
+            return new BaseResponse<>(INVALID_USER_JWT);
+        }
+
         try {
             PostUserAddressRes postUserAddressRes = userService.addUserAddress(postUserAddressReq, userId);
             return new BaseResponse<>(postUserAddressRes);
@@ -303,6 +321,11 @@ public class UserController {
         }
         if(patchUserAddressNicknameReq.getAddressName() == null){
             return new BaseResponse<>(POST_USERS_EMPTY_ADDRESS);
+        }
+
+        String userIdByJwt = jwtService.getUserId();
+        if(!userId.equals(userIdByJwt)){
+            return new BaseResponse<>(INVALID_USER_JWT);
         }
 
         //addressId 값이 없을때 예외 처리?

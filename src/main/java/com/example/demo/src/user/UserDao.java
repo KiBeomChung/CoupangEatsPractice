@@ -100,6 +100,13 @@ public class UserDao {
         return this.jdbcTemplate.queryForObject(checkOrderIdQuery, int.class, checkOrderIdParam);
     }
 
+    //reviewId 확인하는 메소드
+    public int checkReviewId(long reviewId){
+        String checkOrderIdQuery = "select exists(select orderId from Review where reviewId = ?)";
+        long checkOrderIdParam = reviewId;
+        return this.jdbcTemplate.queryForObject(checkOrderIdQuery, int.class, checkOrderIdParam);
+    }
+
     // 중복된 주소가 있는지 확인하는 메소드
     public int isMultipleAddress(String address, String userId){
         String isMultipleAddressQuery = "select exists(select userId from address where realAddress = ? and userId = ?)";
@@ -242,7 +249,7 @@ public class UserDao {
 
     public String addUserAddress(PostUserAddressReq postUserAddressReq, String userId) {
         String addUserAddressQuery = "insert into address (addressName, userId, status, realAddress) VALUES(?,?,?,?)";
-        Object[] addUserAddressParam = new Object[]{postUserAddressReq.getAddressName(), postUserAddressReq.getUserId(),
+        Object[] addUserAddressParam = new Object[]{postUserAddressReq.getAddressName(), userId,
                 postUserAddressReq.getStatus(), postUserAddressReq.getRealAddress()};
         this.jdbcTemplate.update(addUserAddressQuery, addUserAddressParam);
 
