@@ -90,7 +90,9 @@ public class UserProvider {
 
         if(postLoginReq.getPassword().equals(password)){
             String userId = userDao.getPwd(postLoginReq).getUserId();
+            System.out.println("로그인한 아이디:" + userId);
             String jwt = jwtService.createJwt(userId);
+            System.out.println("그때의 jwt: " + jwt);
             return new PostLoginRes(userId,jwt);
         }
         else{

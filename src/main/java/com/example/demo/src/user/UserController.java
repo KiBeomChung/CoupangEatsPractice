@@ -140,17 +140,16 @@ public class UserController {
     @PatchMapping("/{userId}")
     public BaseResponse<String> modifyUserAddress(@PathVariable("userId") String userId, @RequestBody PatchUserReq patchUserReq){
         try {
-            //jwt에서 idx 추출.
-            //int userIdxByJwt = jwtService.getUserIdx();
-            //userIdx와 접근한 유저가 같은지 확인
-//            if(userIdx != userIdxByJwt){
-//                return new BaseResponse<>(INVALID_USER_JWT);
-//            }
+            //jwt에서 id 추출.
+            String userIdByJwt = jwtService.getUserId();
+            System.out.println("userIdByJwt: " + userIdByJwt);
+            //userId와 접근한 유저가 같은지 확인
+            if(!userId.equals(userIdByJwt)){
+                return new BaseResponse<>(INVALID_USER_JWT);
+            }
 
             //주소 변경
             PatchUserReq patchUserReq1 = new PatchUserReq(userId, patchUserReq.getAddress());
-
-
             userService.modifyUserAddress(patchUserReq1);
 
             String result = "";
@@ -159,6 +158,36 @@ public class UserController {
             return new BaseResponse<>((exception.getStatus()));
         }
     }
+
+
+//    /**
+//     * 유저정보변경 API
+//     * [PATCH] /users/:userIdx
+//     * @return BaseResponse<String>
+//     */
+//    @ResponseBody
+//    @PatchMapping("/{userId}")
+//    public BaseResponse<String> modifyUserAddress(@PathVariable("userId") String userId, @RequestBody PatchUserReq patchUserReq){
+//        try {
+//            //jwt에서 idx 추출.
+//            //int userIdxByJwt = jwtService.getUserIdx();
+//            //userIdx와 접근한 유저가 같은지 확인
+////            if(userIdx != userIdxByJwt){
+////                return new BaseResponse<>(INVALID_USER_JWT);
+////            }
+//
+//            //주소 변경
+//            PatchUserReq patchUserReq1 = new PatchUserReq(userId, patchUserReq.getAddress());
+//
+//
+//            userService.modifyUserAddress(patchUserReq1);
+//
+//            String result = "";
+//            return new BaseResponse<>(result);
+//        } catch (BaseException exception) {
+//            return new BaseResponse<>((exception.getStatus()));
+//        }
+//    }
 
     /**
      * 회원이 주문한 주문 내역 영수증

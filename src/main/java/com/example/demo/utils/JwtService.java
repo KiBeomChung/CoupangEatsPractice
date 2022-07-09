@@ -52,33 +52,60 @@ public class JwtService {
      */
     public String getJwt(){
         HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest();
+        // 쿠키, 헤더 등의 정보를 request 변수에 저장하여 받아올 수 있다.
         return request.getHeader("X-ACCESS-TOKEN");
+        // request에 저장되 값중에 Header에 있는 값만 가져온다. 그리고 그 헤더의 값을 X-ACCESS_TOKEN 이라고 부르기로함.
     }
 
     /*
-    JWT에서 userIdx 추출
-    @return int
+    JWT에서 userId 추출
+    @return String
     @throws BaseException
      */
-    public int getUserIdx() throws BaseException{
+    public  String getUserId() throws BaseException{
         //1. JWT 추출
-        String accessToken = getJwt();
-        if(accessToken == null || accessToken.length() == 0){
+        String accessToken = getJwt(); // 헤더의 값이 accessToken 안에 저장
+        if(accessToken == null || accessToken.length() == 0){ // 헤더에 아무것도 안들어있을 경우 예외처리
             throw new BaseException(EMPTY_JWT);
-        }
+        } //일단 jwt 추출까지는 정상적으로 이루어짐
 
         // 2. JWT parsing
-        Jws<Claims> claims;
+        Jws<Claims> claims; //클레임 선언
         try{
             claims = Jwts.parser()
-                    .setSigningKey(Secret.JWT_SECRET_KEY)
+                    .setSigningKey(Secret.JWT_SECRET_KEY) //비밀키 이용해서 복호화
                     .parseClaimsJws(accessToken);
         } catch (Exception ignored) {
             throw new BaseException(INVALID_JWT);
         }
+        System.out.println("claims: " + claims);
+        // 3. userId 추출
+        System.out.println(claims.getBody());
+        System.out.println(claims.getBody().get("userId", String.class));
 
-        // 3. userIdx 추출
-        return claims.getBody().get("userIdx",Integer.class);
+        return claims.getBody().get("userId", String.class);
     }
+
+
+//    public int getUserIdx() throws BaseException{
+//        //1. JWT 추출
+//        String accessToken = getJwt();
+//        if(accessToken == null || accessToken.length() == 0){
+//            throw new BaseException(EMPTY_JWT);
+//        }
+//
+//        // 2. JWT parsing
+//        Jws<Claims> claims;
+//        try{
+//            claims = Jwts.parser()
+//                    .setSigningKey(Secret.JWT_SECRET_KEY)
+//                    .parseClaimsJws(accessToken);
+//        } catch (Exception ignored) {
+//            throw new BaseException(INVALID_JWT);
+//        }
+//
+//        // 3. userIdx 추출
+//        return claims.getBody().get("userIdx",Integer.class);
+//    }
 
 }
