@@ -52,6 +52,7 @@ public class JwtService {
      */
     public String getJwt(){
         HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest();
+        System.out.println("getJWt() 결과 : " + request);
         // 쿠키, 헤더 등의 정보를 request 변수에 저장하여 받아올 수 있다.
         return request.getHeader("X-ACCESS-TOKEN");
         // request에 저장되 값중에 Header에 있는 값만 가져온다. 그리고 그 헤더의 값을 X-ACCESS_TOKEN 이라고 부르기로함.
@@ -74,8 +75,8 @@ public class JwtService {
         Jws<Claims> claims; //클레임 선언
         try{
             claims = Jwts.parser()
-                    .setSigningKey(Secret.JWT_SECRET_KEY) //비밀키 이용해서 복호화
-                    .parseClaimsJws(accessToken);
+                    .setSigningKey(Secret.JWT_SECRET_KEY) //키 이용해서 복호화
+                    .parseClaimsJws(accessToken); //서명 오류 구별 메소드
         } catch (Exception ignored) {
             throw new BaseException(INVALID_JWT);
         }

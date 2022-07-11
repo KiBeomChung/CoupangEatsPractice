@@ -199,14 +199,13 @@ public class UserController {
         if(userId == null){ //userId의 값이 없을떄
             return new BaseResponse<>(USERS_EMPTY_USER_ID);
         }
-
-        String userIdByJwt = jwtService.getUserId();
-        if(!userId.equals(userIdByJwt)){
-            return new BaseResponse<>(INVALID_USER_JWT);
-        }
         //orderId의 값이 없을때는 어떻게 해야할까? long 형식은 null 값이 없는데,,
 
         try{
+            String userIdByJwt = jwtService.getUserId();
+            if(!userId.equals(userIdByJwt)){
+                return new BaseResponse<>(INVALID_USER_JWT);
+            }
             GetReceiptRes getReceiptRes = userProvider.getReceiptRes(userId, orderId);
             return new BaseResponse<>(getReceiptRes);
 
@@ -228,13 +227,11 @@ public class UserController {
         if(userId == null){ //userId의 값이 없을떄
             return new BaseResponse<>(USERS_EMPTY_USER_ID);
         }
-
-        String userIdByJwt = jwtService.getUserId();
-        if(!userId.equals(userIdByJwt)){
-            return new BaseResponse<>(INVALID_USER_JWT);
-        }
-
         try {
+            String userIdByJwt = jwtService.getUserId();
+            if(!userId.equals(userIdByJwt)){
+                return new BaseResponse<>(INVALID_USER_JWT);
+            }
             List<GetOrderListRes> getOrderListRes = userProvider.getOrderListRes(userId);
             return new BaseResponse<>(getOrderListRes);
 
@@ -257,12 +254,11 @@ public class UserController {
             return new BaseResponse<>(USERS_EMPTY_USER_ID);
         }
 
-        String userIdByJwt = jwtService.getUserId();
-        if(!userId.equals(userIdByJwt)){
-            return new BaseResponse<>(INVALID_USER_JWT);
-        }
-
         try {
+            String userIdByJwt = jwtService.getUserId();
+            if(!userId.equals(userIdByJwt)){
+                return new BaseResponse<>(INVALID_USER_JWT);
+            }
             List<GetUserAddressRes> getUserAddressResList = userProvider.getUserAddressList(userId);
             return new BaseResponse<>(getUserAddressResList);
         } catch (BaseException exception) {
@@ -291,12 +287,11 @@ public class UserController {
             return new BaseResponse<>(POST_USERS_EMPTY_STATUS);
         }
 
-        String userIdByJwt = jwtService.getUserId();
-        if(!userId.equals(userIdByJwt)){
-            return new BaseResponse<>(INVALID_USER_JWT);
-        }
-
         try {
+            String userIdByJwt = jwtService.getUserId();
+            if(!userId.equals(userIdByJwt)){
+                return new BaseResponse<>(INVALID_USER_JWT);
+            }
             PostUserAddressRes postUserAddressRes = userService.addUserAddress(postUserAddressReq, userId);
             return new BaseResponse<>(postUserAddressRes);
         } catch (BaseException exception) {
@@ -323,13 +318,13 @@ public class UserController {
             return new BaseResponse<>(POST_USERS_EMPTY_ADDRESS);
         }
 
-        String userIdByJwt = jwtService.getUserId();
-        if(!userId.equals(userIdByJwt)){
-            return new BaseResponse<>(INVALID_USER_JWT);
-        }
-
         //addressId 값이 없을때 예외 처리?
         try {
+            String userIdByJwt = jwtService.getUserId();
+            if(!userId.equals(userIdByJwt)){
+                return new BaseResponse<>(INVALID_USER_JWT);
+            }
+
             PatchUserAddressNicknameReq patchUserAddressNicknameReq1 = new PatchUserAddressNicknameReq(userId, addressId, patchUserAddressNicknameReq.getAddressName());
             userService.modifyAddressNickname(patchUserAddressNicknameReq1);
 

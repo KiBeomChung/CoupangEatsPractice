@@ -92,12 +92,11 @@ public class RestaurantController {
     @ResponseBody
     public BaseResponse<List<GetFavoriteRestaurantRes>> getFavoriteRestaurantList(@PathVariable("userId") String userId) throws BaseException{
 
-        String userIdByJwt = jwtService.getUserId();
-        if(!userId.equals(userIdByJwt)){
-            return new BaseResponse<>(INVALID_USER_JWT);
-        }
-
         try {
+            String userIdByJwt = jwtService.getUserId();
+            if(!userId.equals(userIdByJwt)){
+                return new BaseResponse<>(INVALID_USER_JWT);
+            }
             List<GetFavoriteRestaurantRes> getFavoriteRestaurantResList = restaurantProvider.getFavoriteRestaurant(userId);
             return new BaseResponse<>(getFavoriteRestaurantResList);
         } catch(BaseException exception) {

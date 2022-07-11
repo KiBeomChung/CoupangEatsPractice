@@ -8,8 +8,8 @@ com/example/demo/src/restaurant/model/GetRestaurantListRes.java
  com.example.demo.src.restaurant.model.GetRestaurantListRes
 com/example/demo/utils/ValidationRegex.java
  com.example.demo.utils.ValidationRegex
-com/example/demo/utils/JwtService.java
- com.example.demo.utils.JwtService
+com/example/demo/src/review/ReviewDAO.java
+ com.example.demo.src.review.ReviewDAO
 com/example/demo/src/review/model/PatchUserReviewReq.java
  com.example.demo.src.review.model.PatchUserReviewReq
 com/example/demo/src/restaurant/model/GetEatsOnlyMainRes.java
@@ -38,12 +38,12 @@ com/example/demo/src/restaurant/model/GetEventRes.java
  com.example.demo.src.restaurant.model.GetEventRes
 com/example/demo/src/user/model/PostLoginReq.java
  com.example.demo.src.user.model.PostLoginReq
-com/example/demo/src/user/UserController.java
- com.example.demo.src.user.UserController
+com/example/demo/src/review/model/PostUserReviewReq.java
+ com.example.demo.src.review.model.PostUserReviewReq
 com/example/demo/src/user/model/GetOrderListRes.java
  com.example.demo.src.user.model.GetOrderListRes
-com/example/demo/src/user/UserProvider.java
- com.example.demo.src.user.UserProvider
+com/example/demo/src/user/UserDao.java
+ com.example.demo.src.user.UserDao
 com/example/demo/src/review/model/DeleteUserReviewDeleteReq.java
  com.example.demo.src.review.model.DeleteUserReviewDeleteReq
 com/example/demo/config/secret/Secret.java
@@ -74,8 +74,6 @@ com/example/demo/config/BaseResponse.java
  com.example.demo.config.BaseResponse
 com/example/demo/src/user/model/PostUserAddressReq.java
  com.example.demo.src.user.model.PostUserAddressReq
-com/example/demo/src/user/UserDao.java
- com.example.demo.src.user.UserDao
 com/example/demo/src/restaurant/RestaurantService.java
  com.example.demo.src.restaurant.RestaurantService
 com/example/demo/src/user/UserService.java
@@ -84,13 +82,15 @@ com/example/demo/src/restaurant/RestaurantProvider.java
  com.example.demo.src.restaurant.RestaurantProvider
 com/example/demo/src/restaurant/RestaurantController.java
  com.example.demo.src.restaurant.RestaurantController
-com/example/demo/src/review/ReviewDAO.java
- com.example.demo.src.review.ReviewDAO
-com/example/demo/src/review/model/PostUserReviewReq.java
- com.example.demo.src.review.model.PostUserReviewReq
 com/example/demo/src/review/ReviewProvider.java
  com.example.demo.src.review.ReviewProvider
 com/example/demo/src/review/ReviewController.java
  com.example.demo.src.review.ReviewController
+com/example/demo/utils/JwtService.java
+ com.example.demo.utils.JwtService
+com/example/demo/src/user/UserController.java
+ com.example.demo.src.user.UserController
+com/example/demo/src/user/UserProvider.java
+ com.example.demo.src.user.UserProvider
 com/example/demo/src/review/ReviewService.java
  com.example.demo.src.review.ReviewService

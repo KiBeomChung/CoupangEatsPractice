@@ -36,6 +36,7 @@ public class ReviewController {
 
     /**
      * 리뷰 작성
+     *
      * @param postUserReviewReq
      * @param userId
      * @param orderId
@@ -47,29 +48,33 @@ public class ReviewController {
                                                        @PathVariable("userId") String userId,
                                                        @PathVariable("orderId") long orderId) throws BaseException {
 
-        if(userId == null){ //userId의 값이 없을떄
+        if (userId == null) { //userId의 값이 없을떄
             return new BaseResponse<>(USERS_EMPTY_USER_ID);
         }
         // + orderId, + reviewScore 의 값이 null값 일때 예외처리 메소드
 
-        String userIdByJwt = jwtService.getUserId();
-        if(!userId.equals(userIdByJwt)){
-            return new BaseResponse<>(INVALID_USER_JWT);
-        }
-
-        if(postUserReviewReq.getReviewText() == null) { // 리뷰 부분이 nulll 일때 예외처리 (null과 공백은 다름, 공백일때는 문제 x)
+        if (postUserReviewReq.getReviewText() == null) { // 리뷰 부분이 nulll 일때 예외처리 (null과 공백은 다름, 공백일때는 문제 x)
             return new BaseResponse<>(POST_USERS_EMPTY_TEXT);
         }
-        if(reviewService.checkReviewScore(postUserReviewReq.getReviewScore()) == false){ //별점을 0미만, 5이상으로 주었을 경우
+        if (reviewService.checkReviewScore(postUserReviewReq.getReviewScore()) == false) { //별점을 0미만, 5이상으로 주었을 경우
             return new BaseResponse<>(INVALID_REVIEW_SCORE);
         }
 
-        PostUserReviewRes postUserReviewRes = reviewService.writeReview(postUserReviewReq, userId, orderId);
-        return new BaseResponse<>(postUserReviewRes);
+        try {
+            String userIdByJwt = jwtService.getUserId();
+            if (!userId.equals(userIdByJwt)) {
+                return new BaseResponse<>(INVALID_USER_JWT);
+            }
+            PostUserReviewRes postUserReviewRes = reviewService.writeReview(postUserReviewReq, userId, orderId);
+            return new BaseResponse<>(postUserReviewRes);
+        } catch (BaseException exception) {
+            return new BaseResponse<>(exception.getStatus());
+        }
     }
 
     /**
      * 리뷰 조회
+     *
      * @param userId
      * @param orderId
      * @return BaseResponse<GetUserReviewRes>
@@ -79,25 +84,26 @@ public class ReviewController {
     public BaseResponse<GetUserReviewRes> getUserReviewResBaseResponse(@PathVariable("userId") String userId,
                                                                        @PathVariable("orderId") long orderId) throws BaseException {
 
-        if(userId == null){ //userId의 값이 없을떄
+        if (userId == null) { //userId의 값이 없을떄
             return new BaseResponse<>(USERS_EMPTY_USER_ID);
         }
 
-        String userIdByJwt = jwtService.getUserId();
-        if(!userId.equals(userIdByJwt)){
-            return new BaseResponse<>(INVALID_USER_JWT);
-        }
         // + orderId의 값이 null값 일때 예외처리 메소드
         try {
+            String userIdByJwt = jwtService.getUserId();
+            if (!userId.equals(userIdByJwt)) {
+                return new BaseResponse<>(INVALID_USER_JWT);
+            }
             GetUserReviewRes getUserReviewRes = reviewProvider.getUserReviewRes(userId, orderId);
             return new BaseResponse<>(getUserReviewRes);
-        } catch(BaseException exception) {
+        } catch (BaseException exception) {
             return new BaseResponse<>(exception.getStatus());
         }
     }
 
     /**
      * 리뷰 수정
+     *
      * @param userId
      * @param orderId
      * @param patchUserReviewReq
@@ -109,36 +115,36 @@ public class ReviewController {
                                                  @PathVariable("orderId") long orderId,
                                                  @RequestBody PatchUserReviewReq patchUserReviewReq) throws BaseException {
 
-        String userIdByJwt = jwtService.getUserId();
-        if(!userId.equals(userIdByJwt)){
-            return new BaseResponse<>(INVALID_USER_JWT);
-        }
-
-        if(userId == null){ //userId의 값이 없을떄
+        if (userId == null) { //userId의 값이 없을떄
             return new BaseResponse<>(USERS_EMPTY_USER_ID);
         }
         // + orderId의 값이 null값 일때 예외처리 메소드
-        if(patchUserReviewReq.getReviewText() == null){ //text부분이 없을때
+        if (patchUserReviewReq.getReviewText() == null) { //text부분이 없을때
             return new BaseResponse<>(POST_USERS_EMPTY_TEXT);
         }
 
-        Timestamp dateNow = new Timestamp(System.currentTimeMillis()); //수정시간 받아오기
-        patchUserReviewReq.setOrderedAt(dateNow); //수정된 시간 저장
-
         try {
+            String userIdByJwt = jwtService.getUserId();
+            if (!userId.equals(userIdByJwt)) {
+                return new BaseResponse<>(INVALID_USER_JWT);
+            }
+            Timestamp dateNow = new Timestamp(System.currentTimeMillis()); //수정시간 받아오기
+            patchUserReviewReq.setOrderedAt(dateNow); //수정된 시간 저장
             PatchUserReviewReq patchUserReviewReq1 = new PatchUserReviewReq(userId, orderId, patchUserReviewReq.getReviewText(), patchUserReviewReq.getOrderedAt());
 
             reviewService.modifyUserReview(patchUserReviewReq1);
             String result = "";
             return new BaseResponse<>(result);
 
-        }   catch(BaseException exception) {
-                return new BaseResponse<>(exception.getStatus());
-            }
+        } catch (BaseException exception) {
+            return new BaseResponse<>(exception.getStatus());
+        }
     }
+
 
     /**
      * 리뷰 삭제
+     *
      * @param userId
      * @param reviewId
      * @param
@@ -147,20 +153,19 @@ public class ReviewController {
     @DeleteMapping("/delete/{userId}/{reviewId}")
     public BaseResponse<String> deleteUserReview(@PathVariable("userId") String userId,
                                                  @PathVariable("reviewId") long reviewId
-                                                 ) throws BaseException {
-
-        String userIdByJwt = jwtService.getUserId();
-        if(!userId.equals(userIdByJwt)){
-            return new BaseResponse<>(INVALID_USER_JWT);
-        }
+    ) throws BaseException {
 
         try {
+            String userIdByJwt = jwtService.getUserId();
+            if (!userId.equals(userIdByJwt)) {
+                return new BaseResponse<>(INVALID_USER_JWT);
+            }
             DeleteUserReviewDeleteReq deleteUserReviewDeleteReq1 = new DeleteUserReviewDeleteReq(userId, reviewId);
             reviewService.deleteUserReview(deleteUserReviewDeleteReq1);
 
             String result = "삭제 완료하였습니다.";
             return new BaseResponse<>(result);
-        } catch(BaseException exception) {
+        } catch (BaseException exception) {
             return new BaseResponse<>(exception.getStatus());
         }
     }
