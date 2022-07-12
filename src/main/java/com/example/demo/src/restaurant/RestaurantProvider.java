@@ -30,14 +30,17 @@ public class RestaurantProvider {
         this.jwtService = jwtService;
     }
 
-    public List<GetRestaurantMenuRes> getRestaurantMenu(long restaurant_Id) throws BaseException {
+    public GetRestaurantMenuRes2 getRestaurantMenu(long restaurant_Id) throws BaseException {
 
         if(restaurantDAO.checkRestaurantId(restaurant_Id) != 1){ //해당 가게 id가 디비에 없을 경우
             throw new BaseException(NOT_EXISTS_RESTAURANT_ID);
         }
 
+        String getRestaurantName = restaurantDAO.GetRestaurantName(restaurant_Id);
         List<GetRestaurantMenuRes> getRestaurantMenuRes = restaurantDAO.getRestaurantMenuById(restaurant_Id);
-        return getRestaurantMenuRes;
+
+        GetRestaurantMenuRes2 getRestaurantMenuRes2 = new GetRestaurantMenuRes2(getRestaurantName, getRestaurantMenuRes);
+        return getRestaurantMenuRes2;
     }
 
     public List<GetFavoriteRestaurantRes> getFavoriteRestaurant(String userId) throws BaseException {

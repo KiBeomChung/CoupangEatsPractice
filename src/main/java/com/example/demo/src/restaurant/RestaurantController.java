@@ -72,10 +72,10 @@ public class RestaurantController {
      */
     @GetMapping("/{restaurant_Id}")
     @ResponseBody
-    public BaseResponse<List<GetRestaurantMenuRes>> getRestaurantMenuBase(@PathVariable("restaurant_Id") long restaurant_Id)  throws BaseException{
+    public BaseResponse<GetRestaurantMenuRes2> getRestaurantMenuBase(@PathVariable("restaurant_Id") long restaurant_Id)  throws BaseException{
 
         try {
-            List<GetRestaurantMenuRes> getRestaurantMenuRes = restaurantProvider.getRestaurantMenu(restaurant_Id);
+            GetRestaurantMenuRes2 getRestaurantMenuRes = restaurantProvider.getRestaurantMenu(restaurant_Id);
             return new BaseResponse<>(getRestaurantMenuRes);
         }     catch(BaseException exception) {
             return new BaseResponse<>(exception.getStatus());

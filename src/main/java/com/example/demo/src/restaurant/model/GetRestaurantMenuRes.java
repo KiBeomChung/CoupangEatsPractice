@@ -9,7 +9,6 @@ import lombok.Setter;
 @AllArgsConstructor
 public class GetRestaurantMenuRes {
 
-    private String name;
     private String categoryName;
     private String foodName;
     private String mostReviewed;

@@ -19,8 +19,35 @@ public class RestaurantDAO {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
+//    public List<GetRestaurantMenuRes> getRestaurantMenuById(long restaurant_Id) {
+//        String getRestaurantMenuListById = "SELECT Restaurant.name, In_Restaurant_Category.categoryName, Food.foodName, Food.mostReviewed, Food.mostOrdered, Food.price, Food.foodIntroduction,\n" +
+//                "Image.file,\n" +
+//                "Favorite_Restraunt.status\n" +
+//                "FROM Food INNER JOIN In_Restaurant_Category_With_Food ON Food.foodId = In_Restaurant_Category_With_Food.foodId\n" +
+//                "INNER JOIN In_Restaurant_Category ON In_Restaurant_Category.categoryId = In_Restaurant_Category_With_Food.categoryId\n" +
+//                "INNER JOIN Image ON Food.foodId = Image.foodId\n" +
+//                "INNER JOIN Restaurant ON Restaurant.restaurantId = Food.restaurantId\n" +
+//                "INNER JOIN Favorite_Restraunt ON Favorite_Restraunt.restaurantId = Restaurant.restaurantId\n" +
+//                "WHERE Food.restaurantId = ?";
+//        long GetRestaurantParam = restaurant_Id;
+//        return this.jdbcTemplate.query(getRestaurantMenuListById,
+//                (rs, rowNum) -> new GetRestaurantMenuRes(
+//                        rs.getString("name"),
+//                        rs.getString("categoryName"),
+//                        rs.getString("foodName"),
+//                        rs.getString("mostReviewed"),
+//                        rs.getString("mostOrdered"),
+//                        rs.getInt("price"),
+//                        rs.getString("foodIntroduction"),
+//                        rs.getString("file"),
+//                        rs.getString("status")
+//                ),
+//                GetRestaurantParam
+//        );
+//    }
+
     public List<GetRestaurantMenuRes> getRestaurantMenuById(long restaurant_Id) {
-        String getRestaurantMenuListById = "SELECT Restaurant.name, In_Restaurant_Category.categoryName, Food.foodName, Food.mostReviewed, Food.mostOrdered, Food.price, Food.foodIntroduction,\n" +
+        String getRestaurantMenuListById = "SELECT In_Restaurant_Category.categoryName, Food.foodName, Food.mostReviewed, Food.mostOrdered, Food.price, Food.foodIntroduction,\n" +
                 "Image.file,\n" +
                 "Favorite_Restraunt.status\n" +
                 "FROM Food INNER JOIN In_Restaurant_Category_With_Food ON Food.foodId = In_Restaurant_Category_With_Food.foodId\n" +
@@ -32,7 +59,6 @@ public class RestaurantDAO {
         long GetRestaurantParam = restaurant_Id;
         return this.jdbcTemplate.query(getRestaurantMenuListById,
                 (rs, rowNum) -> new GetRestaurantMenuRes(
-                        rs.getString("name"),
                         rs.getString("categoryName"),
                         rs.getString("foodName"),
                         rs.getString("mostReviewed"),
@@ -206,6 +232,14 @@ public class RestaurantDAO {
                         rs.getTimestamp("endDate"),
                         rs.getString("status"))
         );
+    }
+
+    public String GetRestaurantName(long restaurantId){
+        String getRestaurantNameQuery = "SELECT name FROM Restaurant where restaurantId = ?";
+
+        long getRestaurantNameParam = restaurantId;
+
+        return this.jdbcTemplate.queryForObject(getRestaurantNameQuery, String.class, getRestaurantNameParam);
     }
 
     // 입력받은 status의 스펠링을 확인하는 메소드
